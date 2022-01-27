@@ -31,9 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'live.apps.LiveConfig',
-    'users.apps.UsersConfig',
-    'trades.apps.TradesConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'live',
+    'trades',
+    'users',
+    'info',
 ]
 
 MIDDLEWARE = [
