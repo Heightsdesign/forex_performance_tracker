@@ -29,7 +29,7 @@ urlpatterns = [
     path('live_charts/', live_views.live_charts),
     path('about_us/', info_views.about_us),
     path('legal/', info_views.legal),
-    path('user_page/', users_views.user_page),
+    path('user_page/<int:user_id>/', users_views.user_page),
     path('login/', users_views.login),
     path('sign_up/', users_views.sign_up),
     path('performance/', trades_views.performance)
