@@ -19,17 +19,14 @@ from django.conf import settings
 from django.conf.urls import include
 from live import views as live_views
 from trades import views as trades_views
-from users import views
-from info import views as info_views
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', live_views.homepage, name='homepage'),
-    path('live_charts/', live_views.live_charts, name='live_charts'),
-    path('about_us/', info_views.about_us, name='about_us'),
-    path('legal/', info_views.legal, name='legal'),
-    path('performance/', trades_views.performance, name='performance'),
+    re_path(r'^live/', include(('live.urls', 'live'), namespace='live')),
+    re_path(r'^info/', include(('info.urls', 'info'), namespace='info')),
     re_path(r'^users/', include(('users.urls', 'users'), namespace='users')),
 ]
 

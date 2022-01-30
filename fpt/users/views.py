@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from .models import User
 from trades.calculator import percentage_calculator
 from trades.models import Trade, CurrencyPair
@@ -57,3 +56,9 @@ def sign_up(request):
 def login(request):
 
     return render(request, 'users/login_page.html')
+
+
+def performance(request, user_id):
+
+    user = User.objects.get(pk=user_id)
+    return render(request, 'trades/performance.html')
