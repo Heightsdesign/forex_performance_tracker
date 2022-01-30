@@ -1,11 +1,27 @@
 from django import forms
 from django.forms.widgets import TextInput
+from trades.models import CurrencyPair
+
+
+currency_objs = CurrencyPair.objects.all()
+currency_choices = []
+
+for currency in currency_objs:
+    currency_choices.append(currency.name)
+
 
 class TradeForm(forms.Form):
 
-    currrency_pair = forms.CharField(
+    currency_pair = forms.CharField(
         label="currency_pair",
         max_length=6,
+        required=True,
+        widget=forms.Select(choices=currency_choices)
+    )
+
+    position = forms.CharField(
+        label="currency_pair",
+        max_length=4,
         widget=TextInput(attrs={"class": "form-control"}),
         required=True,
     )
