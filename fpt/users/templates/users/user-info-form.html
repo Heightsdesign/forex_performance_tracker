@@ -1,0 +1,44 @@
+<div class="input-wrapper">
+    <div class="ui input">
+        <h3> First Name {{ form.first_name }}</h3>
+    </div>
+</div>
+<div class="input-wrapper">
+    <div class="ui input">
+        <h3> Last Name {{ form.last_name }}</h3>
+    </div>
+</div>
+<div class="input-wrapper">
+    <h3> Country
+        <select class="ui dropdown" id="country" name="country">
+           {% for country in all_countries %}
+                <option value="{{ country.name }}">
+                     {{ country.name }}
+                </option>
+           {% endfor %}
+        </select>
+    </h3>
+</div>
+<div class="input-wrapper">
+    <h3> City
+        <select class="ui dropdown" id="city" name="city" data-sb-validations="required,position">
+               {% for city in all_cities %}
+                    <option value="{{ city.name }}">
+                        {{ city.name }}
+                    </option>
+               {% endfor %}
+        </select>
+    </h3>
+</div>
+<div class="column">
+    <div class="input-wrapper">
+        <div class="ui input">
+            <h3> Zip Code {{ form.zip_code }}</h3>
+        </div>
+    </div>
+</div>
+<div class="input-wrapper">
+    <div class="ui input">
+        <h3>Address {{ form.address }}</h3>
+    </div>
+</div>

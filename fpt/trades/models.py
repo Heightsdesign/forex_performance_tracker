@@ -20,7 +20,7 @@ class Trade(models.Model):
     currency_pair = models.ForeignKey(
         CurrencyPair,
         null=True,
-        on_delete=models.SET_NULL
+        on_delete=models.CASCADE
     )
 
     position = models.CharField(max_length=4, blank=True)

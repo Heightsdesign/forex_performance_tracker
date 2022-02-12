@@ -1,0 +1,15 @@
+{% extends 'live/base.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="home-text">
+        <div class="col text-center">
+            {% if messages %}
+                {% for message in messages %}
+                    <h1 class="alert alert-{{ message.tags }}">{{ message }}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

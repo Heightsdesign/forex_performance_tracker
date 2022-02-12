@@ -5,11 +5,12 @@
 }
 
 body, html {
+    position: relative;
     height: 100%;
     width: 100%
     background-size: contain;
     background-image: url("../assets/img/quren-bg.png");
-    filter: brightness(100%)
+    z-index: auto;
 }
 
 .homepage-bg{
@@ -22,8 +23,37 @@ body, html {
 }
 
 .container{
+    position: relative;
+    left: 0;
     height: 100%;
     width: 100%;
+    z-index: 2;
+}
+
+.bg-1{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: #FFFFFF
+}
+
+.bg-userpage{
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    background-color: #FFFFFF
+}
+
+.home-text{
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 h1{
@@ -36,25 +66,55 @@ h1{
     font-size: 3rem;
     color: #EDEDED;
     letter-spacing: 4px;
+    margin: 0 auto;
+
+}
+
+
+
+.h1-wrapper h1{
+
+    color: rgb(50, 49, 50);
+
+}
+
+.h1-wrapper-2 h1{
+
+    font-size: 3rem;
+    color: rgb(50, 49, 50);
+    letter-spacing: 4px;
+    margin: 0 auto;
+
 }
 
 h2{
     font-weight: 300;
 }
 
+
 .home-text h2{
 
+    font-size: 1rem;
     color: #EDEDED;
+    letter-spacing: 4px;
+    margin: 0 auto;
+
 }
 
-.home-text{
-    position: relative;
-    float: left;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+.h2-wrapper h2{
+
+    color: #EDEDED;;
+
 }
+
+.ghost-2 h1{
+    opacity: 0;
+}
+
+.ghost-1 h3{
+    opacity: 0;
+}
+
 
 nav{
     display: flex;
@@ -65,7 +125,7 @@ nav{
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
-
+    z-index: 4;
 }
 
 .nav-links{
@@ -85,7 +145,7 @@ nav{
 }
 
 .nav-links a:hover{
-    color: rgb(120, 28, 159)
+    color: rgb(120, 28, 159) /* Theme Purle */
 }
 
 .burger{
@@ -148,32 +208,154 @@ nav{
 }
 
 .nav-active{
+    position: absolute;
     transform: translateX(0%);
+    z-index: 10;
 }
 
 @keyframes navlinkfade{
     from{
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(0%);
     }
     to{
         opacity: 1;
-        transform: translateX(0px);
+        transform: translateX(50%);
     }
 }
 
+
+#loginButton{
+    background-color: #EDEDED;
+    color: rgb(120, 28, 159);
+}
+
+#loginButton:hover{
+    background-color: rgb(217, 217, 217);
+}
+
+
 #submitButton{
-    background-color: rgb(120, 28, 159)
+    background-color: rgb(120, 28, 159);
 }
 
 #submitButton:hover{
-    background-color: rgb(80, 8, 111)
+    background-color: rgb(80, 8, 111);
 }
 
 
+.bar-container{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.img-responsive{
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    animation-name: barFade;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+}
+
+.bar-container h2{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes barFade{
+    from{
+        opacity: 0;
+        width: 0%;
+    }
+    to{
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+#message{
+    font-family: 'Poppins', sans-serif;
+    color: #EDEDED;
+    font-weight: 300;
+}
 
 
+.body-wrapper{
+    background-color: #EDEDED
+}
 
 
+.form-wrapper{
+    position: absolute;
+        display: flex;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
 
+}
+
+.sign-up-wrapper{
+        display: flex;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-column-gap: 1em;
+        grid-row-gap: 1em;
+        align-items: center;
+}
+
+.sign-up-wrapper > cell{
+    background: #eee
+    padding: 1em;
+
+}
+
+.input-wrapper{
+
+    display: flex;
+    margin: 10px;
+    color: rgb(50, 49, 50);
+    font-family: 'Poppins', sans-serif;
+    background: #eee
+    padding: 1em;
+
+}
+
+#login-text{
+
+    opacity: 1;
+    animation-name: loginFade;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+
+}
+
+@keyframes loginFade{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.chartContainer{
+    position: relative;
+    width: 600px;
+    height : 400px;
+}
+
+.section-wrapper{
+    position: relative;
+    float: left;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
 

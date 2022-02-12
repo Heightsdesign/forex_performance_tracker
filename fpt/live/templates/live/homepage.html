@@ -6,7 +6,15 @@
     <div class="container">
         <div class="home-text">
             <h1>FOREX PERFORMANCE TRACKER</h1>
-            <h2>Track your performance on the foreign exchange market with our online tools.</h2>
+            <div class="bar-container">
+                <img class='img-responsive' src="{% static 'live/assets/img/homepage-bar2.png' %}" id="homepage-bar"/>
+                <h2>TRACK YOUR FOREX PERFORMANCE WITH OUR ONLINE TOOLS</h2>
+            </div>
+            <div class="ghost-1">
+                <h3>I</h3>
+            </div>
+            <a class="ui primary button" id="loginButton" href="{% url 'users:login' %}">Login</a>
+            <a class="ui primary button" id="submitButton" href="{% url 'users:sign_up' %}">Sign Up</a>
         </div>
     </div>
 </div>

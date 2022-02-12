@@ -1,1 +1,29 @@
-<h1>Login Page</h1>
+{% extends 'live/base.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="home-text">
+        <h1 id="login-text">LOGIN</h1>
+        <form class="mt-5" action="{% url 'users:login' %}" method="POST">
+            {% csrf_token %}
+            <div class="sign-up-wrapper">
+                <div class="row">
+                    <div class="col">
+                        <div class="ui input">
+                           {{ form.email }}
+                        </div>
+                        <div class="ui input">
+                           {{ form.password }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="ui primary button" id="submitButton" type="submit">Login</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
