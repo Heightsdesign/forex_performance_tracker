@@ -1,1 +1,59 @@
-<h1>Live Charts Page</h1>
+{% extends 'live/base.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="section-wrapper">
+        <div class="home-text">
+            <div class="h1-wrapper">
+            <h1>LIVE CURRENCY PAIRS</h1>
+            </div>
+            <div class="bar-container">
+                <img class='img-responsive' src="{% static 'live/assets/img/homepage-bar2.png' %}" id="homepage-bar"/>
+                <div class="h2-wrapper">
+                    <h2>FOREX CURRENCIES</h2>
+                </div>
+            </div>
+            <div class="ghost-2">
+                <h1>I</h1>
+            </div>
+        </div>
+        <div class="ghost-2">
+                <h1>I</h1>
+        </div>
+        <div class="ui two column padded grid">
+            <div class="column">
+                <div class="chartContainer" id="liveCurrencies" style="height:60vh; width:60vw">
+                    <h1>EURUSD</h1>
+                    <canvas id="histChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <script>
+            var histData = JSON.parse('{{actualData|safe}}');
+            console.log(histData);
+            var histChart = document.getElementById("histChart").getContext("2d");
+
+            var dataChart ={
+                labels: Object.keys(histData),
+                datasets:[
+                    {
+                        label:"EURUSD",
+                        fill: true,
+                        pointRadius: 1,
+                        backgroundColor: "rgba(120, 28, 159, 0.5)",
+                        pointBackgroundColor: "rgb(120, 28, 159)",
+                        pointBorderColor: "rgb(120, 28, 159)",
+                        pointHoverBackgroundColor: "rgb(80, 8, 111)",
+                        pointHoverBorderColor: "rgb(80, 8, 111)",
+                        data: Object.values(histData),
+                    }]
+                };
+
+            var dailyChart = new Chart(histChart, {
+                type:'line',
+                data: dataChart
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}

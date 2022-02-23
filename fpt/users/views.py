@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 import json
-import decimal
+import datetime
 from .models import User, Strategy
 from trades.models import Trade, CurrencyPair
 from .forms import TradeForm, UserCreationForm, LoginForm, StrategyForm
@@ -19,6 +19,14 @@ def user_page(request, user_id):
     daily_performances = json.dumps(get_daily_trades(user))
     volumes = json.dumps(get_volumes(user))
     positions = ["BUY", "SELL"]
+
+    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+    today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+
+    try:
+        today_trades = Trade.objects.filter(user=user, datetime__range=(today_min, today_max))
+    except Trade.DoesNotExist:
+        today_trades = None
 
     for trade in all_trades:
         total_trades += trade.profit
@@ -68,6 +76,7 @@ def user_page(request, user_id):
         "form": form,
         "positions": positions,
         "volumes": volumes,
+        "today_trades": today_trades
     }
 
     return render(request, 'users/user_page.html', context)

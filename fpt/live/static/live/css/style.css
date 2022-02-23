@@ -5,13 +5,11 @@
 }
 
 body, html {
-    position: relative;
-    height: 100%;
-    width: 100%
     background-size: contain;
-    background-image: url("../assets/img/quren-bg.png");
     z-index: auto;
+    background-color: #FFFFFF;
 }
+
 
 .homepage-bg{
     height: 100%;
@@ -25,9 +23,14 @@ body, html {
 .container{
     position: relative;
     left: 0;
-    height: 100%;
     width: 100%;
-    z-index: 2;
+    height: 100%;
+}
+
+.container-dashboard{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .bg-1{
@@ -35,7 +38,7 @@ body, html {
     height: 100%;
     width: 100%;
     left: 0;
-    background-color: #FFFFFF
+    background-image: url("../assets/img/quren-bg.png");
 }
 
 .bg-userpage{
@@ -84,6 +87,8 @@ h1{
     color: rgb(50, 49, 50);
     letter-spacing: 4px;
     margin: 0 auto;
+    padding-top: 70px;
+    padding-bottom: 30px;
 
 }
 
@@ -114,6 +119,7 @@ h2{
 .ghost-1 h3{
     opacity: 0;
 }
+
 
 
 nav{
@@ -243,6 +249,13 @@ nav{
     background-color: rgb(80, 8, 111);
 }
 
+#stratButton{
+    background-color: rgb(120, 28, 159);
+}
+
+#stratButton:hover{
+    background-color: rgb(80, 8, 111);
+}
 
 .bar-container{
   position: relative;
@@ -343,12 +356,6 @@ nav{
     }
 }
 
-.chartContainer{
-    position: relative;
-    width: 600px;
-    height : 400px;
-}
-
 .section-wrapper{
     position: relative;
     float: left;
@@ -359,3 +366,9 @@ nav{
     text-align: center;
 }
 
+/* Solid border */
+.grid-line {
+  border: 0;
+  border-top: 8px solid rgb(50, 49, 50);
+  padding-top: 50px;
+}

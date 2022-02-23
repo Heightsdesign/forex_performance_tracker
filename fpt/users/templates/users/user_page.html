@@ -2,48 +2,82 @@
 {% block content %}
 {% load static %}
 <div class ="container">
-    <div class="bg-1">
-        <div class="section-wrapper">
-            <div class="h1-wrapper-2">
-                <h1 class="text-white mt-0" id="first_name">DASHBOARD</h1>
-            </div>
-            <div class="ui divider"></div>
-                <div class="ui two column padded grid">
-                    <div class="column">
-                        <div class="ui comments">
-                            <div class="comment">
-                                <a class="avatar">
-                                    <!--<img src="/images/avatar/small/steve.jpg">-->
-                                </a>
-                                <div class="content">
-                                    <!-- <a class="author">{{ user.username }}</a> -->
-                                    <div class="metadata">
-                                    <!-- <div class="date">2 days ago</div> -->
-                                    </div>
-                                    <h1>
-                                        Strategy
-                                    </h1>
-                                    <form class="ui reply form" action="{% url 'users:user_page' user.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <div class="field">
-                                        <textarea id="content" name="content"></textarea>
-                                        </div>
-                                        <button class="ui primary button", name="stratButton" type="submit">Change Strategy</button>
-                                    </form>
-                                </div>
+    <div class="section-wrapper">
+        <div class="h1-wrapper-2">
+            <h1>DASHBOARD</h1>
+        </div>
+        <div class="ui divider"></div>
+        <div class="ui two column padded grid">
+            <div class="column">
+                <div class="ui comments">
+                    <div class="comment">
+                        <a class="avatar">
+                            <!--<img src="/images/avatar/small/steve.jpg">-->
+                        </a>
+                        <div class="content">
+                            <!-- <a class="author">{{ user.username }}</a> -->
+                            <div class="metadata">
+                            <!-- <div class="date">2 days ago</div> -->
                             </div>
+                            <form class="ui form" action="{% url 'users:user_page' user.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="field">
+                                    <label><h1 style="text-align:left">Strategy</h1></label>
+                                    <textarea rows="3" id="content" name="content"></textarea>
+                                </div>
+                                <button class="ui primary button", style="float:right" name="stratButton" id="stratButton" type="submit">Change Strategy</button>
+                            </form>
                         </div>
                     </div>
-                    <div class="column">
-                        <h1 class="text-white mt-0" id="capital">Trading Capital : {{ user.capital }} $</h1>
-                    </div>
                 </div>
-            <div class="ui divider"></div>
-            <!-- <h1 class="text-white mt-0" id="daily_performances">Performances : {{ daily_performances }} </h1> -->
-            <form class="mt-5" action="{% url 'users:user_page' user.id %}" method="POST">
-                {% csrf_token %}
-                <div class="ui grid">
-                <!-- Currency pair input-->
+            </div>
+            <div class="column">
+                <h1 style="text-align:left" id="capital">Trading Capital : {{ user.capital }} $</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="section-wrapper">
+        <div class="ui inverted segment">
+            <h1 class="ui horizontal inverted divider">Today's Activity</h1>
+        </div>
+        <h1>TRADES</h1>
+        <div class="spacing-div">
+            <hr class="grid-line"/>
+        </div>
+        {% if today_trades %}
+            {% for trade in today_trades %}
+                <div class="ui six column grid">
+                  <div class="row">
+                    <div class="column">
+                      <h1>{{trade.currency_pair.name}}</h1>
+                    </div>
+                    <div class="column">
+                      <h1>{{ trade.position }}</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="column">
+                      <h1>{{ trade.entry_point }}</h1>
+                    </div>
+                    <div class="column">
+                      <h1>{{ trade.exit_point }}</h1>
+                    </div>
+                    <div class="column">
+                      <h1>{{ trade.profit }}</h1>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui divider"></div>
+                {% endfor %}
+            {% endif %}
+        <!-- <h1 class="text-white mt-0" id="daily_performances">Performances : {{ daily_performances }} </h1> -->
+        <form class="mt-5" action="{% url 'users:user_page' user.id %}" method="POST">
+            {% csrf_token %}
+            <div class="ui six column grid">
+                <div class="row">
+            <!-- Currency pair input-->
                     <div class="column">
                         <select class="ui dropdown" id="currency_pair" name="currency_pair" data-sb-validations="required,position">
                             {% for currency in all_currency_pairs %}
@@ -51,8 +85,6 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column"></div>
-                    <div class="column"></div>
                     <!-- Position input-->
                     <div class="column">
                         <select class="ui dropdown" id="position" name="position" placeholder="Enter position" data-sb-validations="required,position" />
@@ -61,102 +93,93 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column"></div>
-                    <div class="column"></div>
-                    <div class="column">
-                    <!-- Entry point input-->
+                    <div class="column" style="border:none">
+                        <!-- Entry point input-->
                         <div class="ui input">
                             <input class="form-control" id="entry_point" name="entry_point" type="entry_point" placeholder="Entry Point" data-sb-validations="required,entry_point" />
                         </div>
                     </div>
                     <!-- Exit point input-->
-                    <div class="column"></div>
-                    <div class="column"></div>
                     <div class="column">
                         <div class="ui input">
                             <input class="form-control" id="exit_point" name="exit_point" type="exit_point" placeholder="Exit Point" data-sb-validations="required,exit_point" />
                         </div>
                     </div>
                     <!-- Profit input-->
-                    <div class="column"></div>
-                    <div class="column"></div>
                     <div class="column">
                         <div class="ui input">
                             <input class="form-control" id="profit" name="profit" type="profit" placeholder="Profit" data-sb-validations="required,profit" />
                         </div>
                     </div>
-                    <div class="column"></div>
-                    <div class="column"></div>
-                    <div class="column">
+                    <div class="column" style="border:none">
                         <button class="ui primary button" id="submitButton"name="tradeButton" type="submit">Add Trade</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+        <div class="ui divider"></div>
+        <h1 class="text-white mt-0" id="total_trades">Total profit : {{ total_trades }} $</h1>
     </div>
 </div>
 <div class="container">
-    <div class="bg-1">
-        <div class="userPageContainer">
-            <div class="ui two column padded grid">
-                    <div class="column">
-                        <h1 class="text-white mt-0" id="total_trades">Total profit : {{ total_trades }} $</h1>
-                        <div class="chartContainer">
-                            <canvas id="perfChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="column">
-                        {{ volumes }}
-                        <div class="chartContainer">
-                            <canvas id="volumesChart"></canvas>
-                        </div>
-                    </div>
+    <div class="section-wrapper">
+        <div class="ui two column padded grid">
+            <div class="column">
+                <div class="chartContainer" style="height:40vh; width:40vw">>
+                    <h1>Daily Performances</h1>
+                    <canvas id="perfChart"></canvas>
                 </div>
-            <script>
-                var dataPerf = JSON.parse('{{daily_performances|safe}}');
-                console.log(dataPerf);
-                var perfChart = document.getElementById("perfChart").getContext("2d");
-
-                var dataChart ={
-                    labels: Object.keys(dataPerf),
-                    datasets:[
-                        {
-                            label:"Daily Performance",
-                            data: Object.values(dataPerf),
-                            backgroundColor:"purple",
-                            fillColor: "rgb(0, 0, 0, 1)",
-                            strokeColor : "rgb(0, 0, 0, 1)",
-                            highlightFill: "rgb(0, 0, 0, 1)",
-                            highlightStroke: "rgb(0, 0, 0, 1)",
-                        }]
-                    };
-
-                var dailyChart = new Chart(perfChart, {
-                    type:'bar',
-                    data: dataChart
-                });
-
-                var dataVol = JSON.parse('{{volumes|safe}}');
-                var volumesChart = document.getElementById("volumesChart").getContext("2d");
-
-                var dataVolChart ={
-                    labels: Object.keys(dataVol),
-                    datasets:[
-                        {
-                            label:"Volumes",
-                            backgroundColor:["#950ceb","#100ceb","#eb0c69","#eb650c"],
-                            data: Object.values(dataVol),
-
-                        }]
-                    };
-
-                var volChart = new Chart(volumesChart, {
-                    type:'pie',
-                    data: dataVolChart
-                });
-
-            </script>
+            </div>
+            <div class="column">
+                <div class="chartContainer" style="height:25vh; width:25vw">>
+                    <h1>Volumes</h1>
+                    <canvas id="volumesChart"></canvas>
+                </div>
+            </div>
         </div>
+        <script>
+            var dataPerf = JSON.parse('{{daily_performances|safe}}');
+            console.log(dataPerf);
+            var perfChart = document.getElementById("perfChart").getContext("2d");
+
+            var dataChart ={
+                labels: Object.keys(dataPerf),
+                datasets:[
+                    {
+                        label:"Daily Performance",
+                        data: Object.values(dataPerf),
+                        backgroundColor:"purple",
+                        fillColor: "rgb(0, 0, 0, 1)",
+                        strokeColor : "rgb(0, 0, 0, 1)",
+                        highlightFill: "rgb(0, 0, 0, 1)",
+                        highlightStroke: "rgb(0, 0, 0, 1)",
+                    }]
+                };
+
+            var dailyChart = new Chart(perfChart, {
+                type:'bar',
+                data: dataChart
+            });
+
+            var dataVol = JSON.parse('{{volumes|safe}}');
+            var volumesChart = document.getElementById("volumesChart").getContext("2d");
+
+            var dataVolChart ={
+                labels: Object.keys(dataVol),
+                datasets:[
+                    {
+                        label:"Volumes",
+                        backgroundColor:["#950ceb","#100ceb","#eb0c69","#eb650c","#eb0c0c","#0ceb87", "#0ca8eb", "#e4eb0c", "#09ed15", "#750247"],
+                        data: Object.values(dataVol),
+
+                    }]
+                };
+
+            var volChart = new Chart(volumesChart, {
+                type:'pie',
+                data: dataVolChart
+            });
+        </script>
     </div>
 </div>
 {% endblock %}

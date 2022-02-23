@@ -15,3 +15,14 @@ const navSlide = ()=>{
 
 navSlide();
 
+
+$.ajax({
+  url: "{% url 'live:live_charts' %}",
+  success: function(data) {
+    var html = $(data).filter('#liveCurrencies').html();
+    $('#liveCurrencies').html(html);
+  }
+});
+
+
+
