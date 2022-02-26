@@ -27,10 +27,41 @@
                     <canvas id="histChart"></canvas>
                 </div>
             </div>
+            <div class="column">
+                <h1 id="test">Hey</h1>
+            </div>
         </div>
+
         <script>
-            var histData = JSON.parse('{{actualData|safe}}');
-            console.log(histData);
+
+            var loc = window.location
+            var wsStart = "ws://"
+            if (loc.protocol == 'https:'){
+                wsStart = 'wss://'
+            }
+            var endpoint = wsStart + loc.host + "/ws/live/"
+            console.log(endpoint)
+
+            socket = new WebSocket(endpoint);
+
+            socket.onopen = function(message) {
+                console.log("open", message);
+              }
+
+            socket.onmessage = function(message) {
+                console.log("message", message);
+            }
+
+            socket.onerror = function(message) {
+                console.log("error", message);
+            }
+
+            socket.onclose = function(message) {
+                console.log("close", message);
+            }
+
+            // var histData = JSON.parse('{{actualData|safe}}');
+            // console.log(histData);
             var histChart = document.getElementById("histChart").getContext("2d");
 
             var dataChart ={
@@ -53,6 +84,7 @@
                 type:'line',
                 data: dataChart
             });
+
         </script>
     </div>
 </div>

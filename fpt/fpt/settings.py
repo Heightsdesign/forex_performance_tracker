@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'channels',
+    'channels_rabbitmq',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,6 +80,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fpt.wsgi.application'
 ASGI_APPLICATION = 'fpt.asgi.application'
 
+# CELERY_BROKER_URL = 'amqp://localhost'
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -92,6 +95,17 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+"""
+CHANNEL_LAYERS = {
+     "default": {
+         "BACKEND": "channels_rabbitmq.core.RabbitmqChannelLayer",
+         "CONFIG": {
+             "host": "amqp://guest:guest@127.0.0.1/",
+          },
+      },
+  }
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

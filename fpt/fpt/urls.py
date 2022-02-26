@@ -30,6 +30,7 @@ urlpatterns = [
     re_path(r'^users/', include(('users.urls', 'users'), namespace='users')),
 ]
 
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
