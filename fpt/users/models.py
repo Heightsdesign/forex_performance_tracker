@@ -117,3 +117,5 @@ class DailyProfit(models.Model):
         decimal_places=2
     )
     datetime = models.DateTimeField(auto_now=True)
+
+

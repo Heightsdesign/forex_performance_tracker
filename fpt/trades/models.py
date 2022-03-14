@@ -1,4 +1,4 @@
-import users.models
+from users.models import User
 from django.db import models
 
 # Create your models here.
@@ -12,7 +12,7 @@ class CurrencyPair(models.Model):
 class Trade(models.Model):
 
     user = models.ForeignKey(
-        users.models.User,
+        User,
         related_name="user",
         on_delete=models.CASCADE
     )
@@ -46,4 +46,9 @@ class Trade(models.Model):
     )
 
     datetime = models.DateTimeField(auto_now=True)
+
+
+
+
+
 

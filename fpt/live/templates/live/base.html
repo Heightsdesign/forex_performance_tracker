@@ -24,27 +24,31 @@
     <link rel="stylesheet" href="{% static 'live/css/style.css' %}">
   </head>
   <body>
-        <nav>
-          <div class="logo">
-            <a href="{% url 'homepage' %}">
-              <img class='img-fluid' src="{% static 'live/assets/img/quren_icon.png' %}" id="nav-icon"/>
-            </a>
-          </div>
-          <ul class="nav-links">
-            <li><a href="{% url 'live:index' %}">Live</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'users:user_page' user_id=user.id %}">{{ user.username }}</a></li>
-            {% else %}
-            <li><a href="{% url 'users:login' %}">login</a></li>
-            {% endif %}
-            <li><a href="{% url 'info:about_us' %}">About</a></li>
-          </ul>
-          <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-          </div>
-        </nav>
+      <nav>
+        <div class="logo">
+          <a href="{% url 'homepage' %}">
+            <img class='img-fluid' src="{% static 'live/assets/img/quren_icon.png' %}" id="nav-icon"/>
+          </a>
+        </div>
+        <ul class="nav-links">
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'live:index' %}">Live</a></li>
+          {% else %}
+          <li><a href="{% url 'users:login' %}">Live</a></li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'users:user_page' user_id=user.id %}">{{ user.username }}</a></li>
+          {% else %}
+          <li><a href="{% url 'users:login' %}">login</a></li>
+          {% endif %}
+          <li><a href="{% url 'info:about_us' %}">About</a></li>
+        </ul>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </nav>
       {% block content %}
       {% endblock %}
   </body>

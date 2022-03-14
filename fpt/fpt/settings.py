@@ -32,9 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
-    'channels',
-    'channels_rabbitmq',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +43,8 @@ INSTALLED_APPS = [
     'trades',
     'users',
     'info',
+    'channels',
+    'channels_postgres',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +79,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fpt.wsgi.application'
 ASGI_APPLICATION = 'fpt.asgi.application'
 
-# CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = 'amqp://localhost'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -96,17 +95,29 @@ DATABASES = {
     }
 }
 
-"""
-CHANNEL_LAYERS = {
+
+"""CHANNEL_LAYERS = {
      "default": {
          "BACKEND": "channels_rabbitmq.core.RabbitmqChannelLayer",
          "CONFIG": {
              "host": "amqp://guest:guest@127.0.0.1/",
           },
       },
-  }
-"""
+  }"""
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
+        'CONFIG': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'Eug&nia06240',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        },
+    },
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
