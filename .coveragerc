@@ -1,0 +1,26 @@
+[run]
+source = .
+branch = False
+timid = True
+[report]
+show_missing = False
+include =
+        *.py
+        *views*
+
+omit =
+    tests.py
+    constants.py
+    *routing*
+    *_test.py
+    *_tests.py
+    tests/*
+    */site-packages/*
+    */migrations/*
+    *__init__*
+    */settings/*
+    *admin*
+    *apps*
+    *forms*
+    *urls*
+    fpt/*
