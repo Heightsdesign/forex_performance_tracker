@@ -35,7 +35,7 @@ def get_daily_trades(user):
     daily_performances = {}
     capital = user.capital
 
-    print(f"Capital = {capital}")
+    # print(f"Capital = {capital}")
 
     used_trades = []
 
@@ -54,7 +54,7 @@ def get_daily_trades(user):
             if trade not in used_trades:
                 used_trades.append(trade)
                 daily_profit += trade.profit
-                print(f"date : {trade.datetime} / profit : {trade.profit}")
+                # print(f"date : {trade.datetime} / profit : {trade.profit}")
 
         # daily_performance = {day_index: float(percentage_calculator(capital, daily_profit))}
         # daily_performances.append(daily_performance)

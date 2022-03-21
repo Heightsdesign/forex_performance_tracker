@@ -19,6 +19,7 @@ def user_page(request, user_id):
     daily_performances = json.dumps(get_daily_trades(user))
     volumes = json.dumps(get_volumes(user))
     positions = ["BUY", "SELL"]
+    user_strategy = Strategy.objects.filter(user=user).last()
 
     today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
     today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
@@ -76,7 +77,8 @@ def user_page(request, user_id):
         "form": form,
         "positions": positions,
         "volumes": volumes,
-        "today_trades": today_trades
+        "today_trades": today_trades,
+        "user_strategy": user_strategy.content
     }
 
     return render(request, 'users/user_page.html', context)

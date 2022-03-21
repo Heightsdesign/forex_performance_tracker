@@ -1,41 +1,35 @@
 {% extends 'live/base.html' %}
 {% block content %}
 {% load static %}
-
-<div class="live-banner">
-    <div class="h1-wrapper">
-    <h1>LIVE CURRENCY PAIRS</h1>
-    </div>
-    <div class="bar-container">
-        <img class='img-responsive' src="{% static 'live/assets/img/homepage-bar2.png' %}" id="homepage-bar"/>
-        <div class="h2-wrapper">
-            <h2>FOREX CURRENCIES</h2>
+<div class="container-half">
+    <div class="home-text">
+        <div class="h1-wrapper">
+            <h1>LIVE CURRENCY PAIRS</h1>
         </div>
-    </div>
-    <div class="ghost-2">
-        <h1>I</h1>
+        <div class="bar-container">
+            <img class='img-responsive' src="{% static 'live/assets/img/homepage-bar2.png' %}" id="homepage-bar"/>
+            <div class="h2-wrapper">
+                <h2>FOREX CURRENCIES</h2>
+            </div>
+        </div>
+        <form class="mt-5" action="{% url 'live:index'%}" method="POST">
+            {% csrf_token %}
+            <select class="ui dropdown" id="currency_pair" name="currency_pair" data-sb-validations="required,position">
+                {% for currency in all_currency_pairs %}
+                    <option value="{{ currency.name }}">{{ currency.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="ui dropdown" id="time_frame" name="time_frame" data-sb-validations="required,position">
+                {% for frame in time_frames %}
+                    <option value="{{ frame }}">{{ frame }}</option>
+                {% endfor %}
+            </select>
+            <button class="ui primary button" id="submitButton" type="submit">Change</button>
+        </form>
     </div>
 </div>
-<div class="section-wrapper">
-    <div class="ghost-2">
-        <h1>I</h1>
-    </div>
-    <div class="ui hidden divider"></div>
-    <form class="mt-5" action="{% url 'live:index'%}" method="POST">
-        {% csrf_token %}
-        <select class="ui dropdown" id="currency_pair" name="currency_pair" data-sb-validations="required,position">
-            {% for currency in all_currency_pairs %}
-                <option value="{{ currency.name }}">{{ currency.name }}</option>
-            {% endfor %}
-        </select>
-        <select class="ui dropdown" id="time_frame" name="time_frame" data-sb-validations="required,position">
-            {% for frame in time_frames %}
-                <option value="{{ frame }}">{{ frame }}</option>
-            {% endfor %}
-        </select>
-        <button class="ui primary button" id="submitButton" type="submit">Change</button>
-    </form>
-    <h1>{{ currency_choice }}</h1>
+<div class="container" id="js-choice">
+    <h1 style="text-align:center">{{ currency_choice }}</h1>
     <div class="ui hidden divider"></div>
     <div class="chartContainer" id="liveCurrencies" style="height:60vh; width:80vw">
         <canvas id="histChart"></canvas>
@@ -110,6 +104,16 @@
         socket.onclose = function(message) {
             console.log("close", message);
         }
+
+        var button = document.getElementById("submitButton");
+        button.onclick = function() {
+            var choice = document.getElementById("js-choice");
+            var content = choice.innerHTML;
+            choice.innerHTML = content;
+            console.log("Refreshed");
+        };
+
+
     </script>
 </div>
 {% endblock %}

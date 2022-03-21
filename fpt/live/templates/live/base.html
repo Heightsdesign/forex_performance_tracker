@@ -30,6 +30,7 @@
             <img class='img-fluid' src="{% static 'live/assets/img/quren_icon.png' %}" id="nav-icon"/>
           </a>
         </div>
+        <div class="ui divider"></div>
         <ul class="nav-links">
           {% if user.is_authenticated %}
           <li><a href="{% url 'live:index' %}">Live</a></li>
@@ -37,7 +38,7 @@
           <li><a href="{% url 'users:login' %}">Live</a></li>
           {% endif %}
           {% if user.is_authenticated %}
-          <li><a href="{% url 'users:user_page' user_id=user.id %}">{{ user.username }}</a></li>
+          <li><a href="{% url 'users:user_page' user_id=user.id %}">Dashboard</a></li>
           {% else %}
           <li><a href="{% url 'users:login' %}">login</a></li>
           {% endif %}
@@ -52,6 +53,23 @@
       {% block content %}
       {% endblock %}
   </body>
+    <footer>
+      <div class="ui equal width grid" style="margin:auto">
+        <div class="column" style="text-align:center">
+          <a href="https://github.com/Heightsdesign/forex_performance_tracker">
+            <img src="{% static 'live/assets/img/github_icon.png' %}"/>
+          </a>
+        </div>
+        <div class="column" style="text-align:center">
+          <a href="{% url 'homepage' %}">
+            <img src="{% static 'live/assets/img/quren_icon-2.png' %}"/>
+          </a>
+        </div>
+        <div class="column" style="text-align:center">
+          <h1>Footer</h1>
+        </div>
+      </div>
+    </footer>
   <script src="{% static 'live/js/main.js' %}" defer></script>
   <script src="{% static 'live/js/semantic.js' %}" defer></script>
 </html>

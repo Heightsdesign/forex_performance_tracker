@@ -34,15 +34,15 @@ def index(request):
         if currency_choice[:-3] == "USD" and time_frame == "DAY":
             currency = DataFetcher(f"{currency_choice[-3:]}=X", "1d", "5m")
         elif currency_choice[:-3] == "USD" and time_frame == "WEEK":
-            currency = DataFetcher(f"{currency_choice[-3:]}=X", "7d", "30m")
+            currency = DataFetcher(f"{currency_choice[-3:]}=X", "1wk", "30m")
         elif currency_choice[:-3] == "USD" and time_frame == "MONTH":
-            currency = DataFetcher(f"{currency_choice[-3:]}=X", "1mo", "2h")
+            currency = DataFetcher(f"{currency_choice[-3:]}=X", "1mo", "1d")
         elif currency_choice[:-3] != "USD" and time_frame == "DAY":
             currency = DataFetcher(f"{currency_choice}=X", "1d", "5m")
         elif currency_choice[:-3] != "USD" and time_frame == "WEEK":
-            currency = DataFetcher(f"{currency_choice}=X", "7d", "30m")
+            currency = DataFetcher(f"{currency_choice}=X", "1wk", "30m")
         elif currency_choice[:-3] != "USD" and time_frame == "MONTH":
-            currency = DataFetcher(f"{currency_choice}=X", "1mo", "2d")
+            currency = DataFetcher(f"{currency_choice}=X", "1mo", "1d")
         else:
             currency = DataFetcher(f"{currency_choice}=X", "1d", "5m")
     else:

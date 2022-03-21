@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
+    'live.apps.LiveConfig',
+    'trades.apps.TradesConfig',
+    'info.apps.InfoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,12 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'live',
-    'trades',
-    'users',
-    'info',
     'channels',
     'channels_postgres',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +166,12 @@ AUTHENTICATION_BACKENDS = (
     )
 
 AUTH_USER_MODEL = 'users.User'
+
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+"""
+NOSE_ARGS = [
+    # '--with-coverage',
+    # '--cover-package=live, trades, users, info',
+]
+"""

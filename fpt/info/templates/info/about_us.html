@@ -1,1 +1,53 @@
-<h1>About Us</h1>
+{% extends 'live/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.paragraph-wrapper{
+    padding-right:10em;
+    padding-left:10em;
+}
+
+.about-text{
+    color:#EDEDED;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    text-align:justify;
+}
+
+#about-us{
+
+    opacity: 1;
+    animation-name: loginFade;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+
+}
+
+</style>
+    <div class="bg-1">
+        <div class="home-text">
+            <h1 id="about-us">ABOUT US</h1>
+            <div class="paragraph-wrapper">
+                <div class="ui hidden divider"></div>
+                <p class="about-text">
+                Quren is an online forex performance tool for traders founded by your humble and gracious host, Paul-Henri ERIC.
+                The point of this application is to give forex traders (on any level) more insights on their performances,
+                how many positive trades do you make per day ? What is your win/loss ratio ? What is the profit coming out of it ? ect...
+                <p>
+                <div class="ui hidden divider"></div>
+                <p class="about-text">
+                The goal here is to answer those questions to provide you more insight.
+                The idea behind this project first came up after beginning my personal journey on forex trading.
+                I was trying to learn what traders do and that often comes with trading. After several days of training a thought came up.
+                The thought that, well, I've got a vague idea of what my performances are, but everybody can tell if whether they're winning or not, but can have I more precise indicators ?
+                Some numbers that would be more than just a balance sheet saying "hey you've won or lost this much today"?
+                Something giving me a better understanding or clues on what I might doing right or what I might be doing wrong.
+                </p>
+                <div class="ui hidden divider"></div>
+                <p class="about-text">
+                So whether you've been trading for a little while or you're just starting your journey but you feel like having more clarity on you're actions could be helpful, you're at the right place !
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

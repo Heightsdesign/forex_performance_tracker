@@ -27,15 +27,15 @@ class LiveConsumer(AsyncWebsocketConsumer):
                 if self.currency_name[:-3] == "USD" and self.time_frame == "DAY":
                     currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1d", "5m")
                 elif self.currency_name[:-3] == "USD" and self.time_frame == "WEEK":
-                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "7d", "30m")
+                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1wk", "30m")
                 elif self.currency_name[:-3] == "USD" and self.time_frame == "MONTH":
-                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1mo", "2d")
+                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1mo", "1d")
                 elif self.currency_name[:-3] != "USD" and self.time_frame == "DAY":
                     currency = DataFetcher(f"{self.currency_name}=X", "1d", "5m")
                 elif self.currency_name[:-3] != "USD" and self.time_frame == "WEEK":
-                    currency = DataFetcher(f"{self.currency_name}=X", "7d", "30m")
+                    currency = DataFetcher(f"{self.currency_name}=X", "1wk", "30m")
                 elif self.currency_name[:-3] != "USD" and self.time_frame == "MONTH":
-                    currency = DataFetcher(f"{self.currency_name}=X", "1mo", "2d")
+                    currency = DataFetcher(f"{self.currency_name}=X", "1mo", "1d")
                 else:
                     currency = DataFetcher(f"{self.currency_name}=X", "1d", "5m")
             else:
