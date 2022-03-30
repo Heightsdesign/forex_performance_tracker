@@ -282,6 +282,14 @@ nav{
     background-color: rgb(217, 217, 217);
 }
 
+#logoutButton{
+    background-color: #EDEDED;
+    color: rgb(120, 28, 159);
+}
+
+#logoutButton:hover{
+    background-color: rgb(217, 217, 217);
+}
 
 #submitButton{
     background-color: rgb(120, 28, 159);
@@ -298,7 +306,6 @@ nav{
 #stratButton:hover{
     background-color: rgb(80, 8, 111);
 }
-
 
 .bar-container{
   position: relative;

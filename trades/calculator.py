@@ -20,9 +20,6 @@ def percentage_calculator(total_val, partial_val):
     return percentage
 
 
-print(percentage_calculator(12500, 100))
-
-
 def get_daily_trades(user):
 
     day_index = 0

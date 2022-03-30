@@ -4,10 +4,8 @@
 <div class="bg-1">
     <div class="home-text">
         <div class="col text-center">
-            {% if messages %}
-                {% for message in messages %}
-                    <h1 class="alert alert-{{ message.tags }}" style="color:#EDEDED">{{ message }}</h1>
-                {% endfor %}
+            {% if message %}
+                    <h1>{{ message }}</h1>
             {% endif %}
         </div>
     </div>

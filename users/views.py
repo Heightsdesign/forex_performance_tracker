@@ -7,7 +7,7 @@ import datetime
 from .models import User, Strategy
 from trades.models import Trade, CurrencyPair
 from .forms import TradeForm, UserCreationForm, LoginForm, StrategyForm
-from trades.calculator import percentage_calculator, get_daily_trades, get_volumes
+from trades.calculator import get_daily_trades, get_volumes
 
 
 def user_page(request, user_id):
@@ -115,15 +115,16 @@ def sign_up(request):
                     password=password,
                 )
 
-                messages.success(
-                    request, f"{username} HAS BEEN SUCCESSFULLY REGISTERED !"
-                )
+                message = f"{username} HAS BEEN SUCCESSFULLY REGISTERED !"
                 success = True
-                context = {"success": success}
+                context = {
+                    "message": message,
+                    "success": success
+                }
 
             else:
-                messages.info(request, "SORRY, THIS ACCOUNT IS ALREADY REGISTERED !")
-                context = {}
+                message = f"{username} SORRY, THIS ACCOUNT IS ALREADY REGISTERED !"
+                context = {"message": message}
 
             return render(request, "users/thank_you.html", context)
 
@@ -150,24 +151,21 @@ def login(request):
 
             user = authenticate(request, email=email, password=password)
 
-            if user is not None:
+            if user.is_authenticated:
                 auth_login(request, user)
-                messages.success(request, f"User connected: {user.username}!")
+                message = f"USER CONNECTED: {user.username}!"
 
             else:
-                messages.info(
-                    request,
-                    "WRONG EMAIL OR PASSWORD"
-                )
+                message = "WRONG EMAIL OR PASSWORD"
 
-            return render(request, "users/thank_you.html")
+            context = {"message": message}
+            return render(request, "users/thank_you.html", context)
 
         else:
-            messages.info(
-                request,
-                "WRONG EMAIL OR PASSWORD"
-            )
-        return render(request, "users/thank_you.html")
+            message = "WRONG EMAIL OR PASSWORD"
+
+        context = {"message": message}
+        return render(request, "users/thank_you.html", context)
 
     else:
         form = LoginForm()
@@ -180,8 +178,8 @@ def login(request):
 def logout_view(request):
 
     logout(request)
-    messages.success(request, "Utilisateur déconnecté!")
-    return redirect("/homepage")
+    message = "Utilisateur déconnecté!"
+    return redirect("/")
 
 
 def performance(request, user_id):

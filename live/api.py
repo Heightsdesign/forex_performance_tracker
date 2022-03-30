@@ -2,19 +2,19 @@ import time
 from datetime import datetime
 import yfinance as yf
 
-
 """
 Get data from yfinance example:
     eurusd = yf.Ticker("EURUSD=X")
     print(eurusd.history(period='1mo', interval='5m'))
 """
 
+
 class DataFetcher:
 
     def __init__(self, pair, period, interval):
         self.pair = pair
         self.period = period
-        self.interval= interval
+        self.interval = interval
         self.pairTicker = yf.Ticker(self.pair)
 
     def get_historical_data(self):
@@ -79,6 +79,4 @@ class DataFetcher:
             time.sleep(5)
 
 
-# print(DataFetcher("EURUSD=X", "1d", "1m").launch_live())
-
-
+print(DataFetcher("EURUSD=X", "1d", "30m").convert_ticker_to_line())
