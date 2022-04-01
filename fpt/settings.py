@@ -88,8 +88,8 @@ CELERY_BROKER_URL = 'amqp://localhost'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpt', # le nom de notre base de donnees creee precedemment
-        'USER': 'postgres', # attention : remplacez par votre nom d'utilisateur
+        'NAME': 'fpt',
+        'USER': 'postgres',
         'PASSWORD': 'Eug&nia06240',
         'HOST': '',
         'PORT': '5432',

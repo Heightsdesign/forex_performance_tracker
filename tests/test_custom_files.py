@@ -1,6 +1,39 @@
 from django.test import TestCase
+from channels.routing import ProtocolTypeRouter, URLRouter
+from django.urls import re_path, path
+import pytest
+from channels.testing import WebsocketCommunicator
+
 from trades.calculator import percentage_calculator
 from live import api
+from live.consumers import LiveConsumer
+
+
+@pytest.mark.django_db(transaction=True)
+@pytest.mark.asyncio
+async def test_my_consumer_connects(self):
+    communicator = WebsocketCommunicator(LiveConsumer.as_asgi(), "/ws/live/")
+    connected, subprotocol = await communicator.connect()
+    assert connected
+    await communicator.send(
+        {"action": "test_async_action", "pk": 2, "request_id": 1}
+    )
+
+    response = await communicator.receive()
+
+    assert response == {
+        "errors": [],
+        "data": {"pk": 2},
+        "action": "test_async_action",
+        "response_status": 200,
+        "request_id": 1,
+    }
+
+    # Test on connection welcome message
+    # user = await communicator.receive_from()
+    # assert user == 'test'
+    # Close
+    await communicator.disconnect()
 
 
 """ Tests the calculator file """

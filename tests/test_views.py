@@ -2,8 +2,10 @@ from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from users.models import User, Strategy
 from trades.models import Trade, CurrencyPair
+from live.models import UserSettings
 from users.views import user_page, sign_up, login, logout_view
 from info.views import about_us, legal
+from live.views import homepage, index
 
 # Create your tests here.
 
@@ -167,6 +169,7 @@ class LogInPageTestCase(TestCase):
 
         self.response = login(self.request)
         self.assertTrue(self.user.is_authenticated)
+
         self.assertEqual(self.response.status_code, 200)
 
 
@@ -244,4 +247,105 @@ class InfoViewsTestCase(TestCase):
         )
         response = legal(self.request)
         self.assertEqual(response.status_code, 200)
+
+
+class LiveViewsTestCase(TestCase):
+
+    def setUp(self):
+
+        # Sets the request factory
+        self.factory = RequestFactory()
+
+        # Creates the user for the tests
+        self.user = User.objects.create_user(
+            email="test@gmail.com",
+            password="test123",
+            first_name="test",
+            username="test",
+            last_name=None,
+            country=None,
+            city=None,
+            zip_code=None,
+            address=None,
+            capital=10000.00,
+        )
+
+        self.pair_eurusd = CurrencyPair.objects.create(
+            name="EURUSD"
+        )
+
+        self.pair_usdjpy = CurrencyPair.objects.create(
+            name="USDJPY"
+        )
+
+    def test_homepage_returns_200(self):
+
+        self.request = self.factory.get(
+            "/"
+        )
+        response = homepage(self.request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_index_returns_200(self):
+
+        self.request = self.factory.get(
+            "/live/"
+        )
+        self.request.user = self.user
+        response = index(self.request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_index_returns_200_with_settings(self):
+
+        self.request = self.factory.get(
+            "/live/"
+        )
+        self.request.user = self.user
+
+        self.user_settings = UserSettings.objects.create(
+            user=self.user,
+            currency_graph=self.pair_eurusd,
+            time_frame="DAY"
+        )
+
+        response = index(self.request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_add_settings_post_request_end_usd(self):
+
+        initial_settings_count = UserSettings.objects.all().count()
+        mock_post_data = {
+            'currency_pair': 'EURUSD',
+            'time_frame': 'DAY',
+        }
+        self.request = self.factory.post(
+            "/live/", data=mock_post_data
+        )
+        self.request.user = self.user
+
+        response = index(self.request)
+        final_settings_count = UserSettings.objects.all().count()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(final_settings_count, initial_settings_count + 1)
+
+    def test_add_settings_post_request_start_usd(self):
+
+        initial_settings_count = UserSettings.objects.all().count()
+        mock_post_data = {
+            'currency_pair': 'USDJPY',
+            'time_frame': 'WEEK',
+        }
+        self.request = self.factory.post(
+            "/live/", data=mock_post_data
+        )
+        self.request.user = self.user
+
+        response = index(self.request)
+        final_settings_count = UserSettings.objects.all().count()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(final_settings_count, initial_settings_count + 1)
+
+
 

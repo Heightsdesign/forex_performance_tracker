@@ -151,7 +151,7 @@ def login(request):
 
             user = authenticate(request, email=email, password=password)
 
-            if user.is_authenticated:
+            if user is not None and user.is_authenticated:
                 auth_login(request, user)
                 message = f"USER CONNECTED: {user.username}!"
 

@@ -17,20 +17,16 @@ def index(request):
     all_currency_pairs = CurrencyPair.objects.all()
     user = request.user
     # Gets the last user choice for live currency
-    user_settings = UserSettings.objects.filter(user=user)[UserSettings.objects.count()-1]
+    user_settings = UserSettings.objects.filter(user=user).last()
 
-    # Gets the id of the currency
+    if user_settings:
+        # Gets the id of the currency
+        currency_choice = user_settings.currency_graph_id
 
-    currency_choice = user_settings.currency_graph_id
+        # Get the currency name from currency pair table
+        currency_choice = CurrencyPair.objects.get(id=currency_choice).name
+        time_frame = user_settings.time_frame
 
-    # Get the currency name from currency pair table
-    currency_choice = CurrencyPair.objects.get(id=currency_choice).name
-    time_frame = user_settings.time_frame
-    print(type(User.objects.filter(email="phe@gmail.com")[0]))
-
-    print(currency_choice)
-
-    if currency_choice :
         if currency_choice[:-3] == "USD" and time_frame == "DAY":
             currency = DataFetcher(f"{currency_choice[-3:]}=X", "1d", "5m")
         elif currency_choice[:-3] == "USD" and time_frame == "WEEK":

@@ -65,18 +65,3 @@ class DataFetcher:
         real_time_data[date_time] = round(price, 5)
 
         return real_time_data
-
-    def launch_live(self):
-
-        data = self.convert_ticker_to_line()
-
-        while True:
-            real_time = self.get_real_time_data()
-            now = list(real_time.keys())[0]
-            price = list(real_time.values())[0]
-            data[now] = price
-            print(data)
-            time.sleep(5)
-
-
-print(DataFetcher("EURUSD=X", "1d", "30m").convert_ticker_to_line())

@@ -12,8 +12,8 @@ class LiveConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
 
-        await self.accept()
         self.user = self.scope["user"]
+        await self.accept()
 
         self.model_user = await self.get_model_user(self.user)
         self.currency_obj = await self.get_currency_obj(self.model_user)
