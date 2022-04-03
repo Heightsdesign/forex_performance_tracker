@@ -100,7 +100,7 @@
             <div class="ui hidden divider"></div>
             <form class="mt-5" action="{% url 'users:user_page' user.id %}" method="POST">
                 {% csrf_token %}
-                <div class="ui six column grid">
+                <div class="ui six column grid" id="trade_inputs">
                     <div class="row">
                 <!-- Currency pair input-->
                         <div class="column">
@@ -112,7 +112,7 @@
                         </div>
                         <!-- Position input-->
                         <div class="column">
-                            <select class="ui dropdown" id="position" name="position" placeholder="Enter position" data-sb-validations="required,position" />
+                            <select class="ui dropdown" id="position" name="position" data-sb-validations="required,position" />
                                 {% for position in positions %}
                                     <option value="{{ position }}">{{ position }}</option>
                                 {% endfor %}

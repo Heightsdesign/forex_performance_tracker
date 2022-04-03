@@ -4,8 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
-from selenium.common.exceptions import NoSuchElementException
-
 
 """
 Inserted Selenium user:
@@ -49,6 +47,7 @@ class SeleniumTestCase(TestCase):
 
         # For local environment
         self.browser = webdriver.Firefox(executable_path='D:\webdrivers\geckodriver.exe', options=self.options)
+        self.browser.maximize_window()
 
     def test_selenium_logic(self):
 
@@ -63,26 +62,78 @@ class SeleniumTestCase(TestCase):
         email_input.send_keys(self.user.email)
         time.sleep(1)
         password_input.send_keys(self.user.password + Keys.RETURN)
-        time.sleep(1)
+        time.sleep(2)
         # Verifies if Pur Beurre is in the title of the page
         assert 'Quren' in self.browser.title
+        time.sleep(2)
         assert self.user.username in self.browser.page_source
 
-        # Gets the users page
+        # Goes to the dashboard
 
         # For production environment
         # browser.get('http://159.65.51.134:80/users/{}/')
 
         # For local environment
         self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+        time.sleep(2)
 
-        # Verifies if the user's first_name is on the page
+        """Tests user strategy change"""
 
-        """
-        favorites_page_button = self.browser.find_element(by=By.ID, value="favorites")
-        self.assertTrue(favorites_page_button)
-        favorites_page_button.click()
+        strategy_input = self.browser.find_element(by=By.ID, value='content')
+        strategy_input.send_keys("Test Strategy")
+        change_strat_button = self.browser.find_element(by=By.ID, value='stratButton')
+        change_strat_button.click()
+        time.sleep(2)
+        self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+        time.sleep(2)
+        assert "Test Strategy" in self.browser.page_source
+
+        """Tests user adds trade"""
+
+        # Enters entry point
+        entry_point = self.browser.find_element(by=By.ID, value="entry_point")
+        entry_point.send_keys(1.35100)
         time.sleep(1)
-        """
 
+        # Enters exit point
+        exit_point = self.browser.find_element(by=By.ID, value="exit_point")
+        exit_point.send_keys(1.35200)
+        time.sleep(1)
+
+        # Enters profit
+        profit = self.browser.find_element(by=By.ID, value="profit")
+        profit.send_keys(100.00)
+        time.sleep(1)
+
+        # Adds the trade, clicks the button
+        add_trade_button = self.browser.find_element(by=By.ID, value="submitButton")
+        time.sleep(1)
+        add_trade_button.click()
+        time.sleep(1)
+
+        self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+
+        # Checks if the trade was added checks by looking for its entry point value
+        assert "1.35100" in self.browser.page_source
+        time.sleep(5)
+        self.browser.get('http://127.0.0.1:8000/live/')
+        time.sleep(10)
+
+        # dropdowns = self.browser.find_element(
+        # by=By.XPATH, value="//div[@class='ui dropdown selection']//i[@class='dropdown icon']"
+        # )
+        # dropdowns.click()
+        # time.sleep(2)
+        # select = Select(dropdowns)
+        # select.select_by_index(2)
+
+        change_button = self.browser.find_element(by=By.ID, value="submitButton")
+        time.sleep(1)
+        change_button.click()
+        time.sleep(1)
+        self.browser.get('http://127.0.0.1:8000/live/')
+        time.sleep(10)
+        assert "EURUSD" in self.browser.page_source
+        time.sleep(2)
         self.browser.quit()
+
