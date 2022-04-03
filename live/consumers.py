@@ -9,7 +9,6 @@ import json
 
 
 class LiveConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
 
         self.user = self.scope["user"]
@@ -24,20 +23,62 @@ class LiveConsumer(AsyncWebsocketConsumer):
         while True:
 
             if self.currency_name is not None:
-                if self.currency_name[:-3] == "USD" and self.time_frame == "DAY":
-                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1d", "5m")
-                elif self.currency_name[:-3] == "USD" and self.time_frame == "WEEK":
-                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1wk", "30m")
-                elif self.currency_name[:-3] == "USD" and self.time_frame == "MONTH":
-                    currency = DataFetcher(f"{self.currency_name[-3:]}=X", "1mo", "1d")
-                elif self.currency_name[:-3] != "USD" and self.time_frame == "DAY":
-                    currency = DataFetcher(f"{self.currency_name}=X", "1d", "5m")
-                elif self.currency_name[:-3] != "USD" and self.time_frame == "WEEK":
-                    currency = DataFetcher(f"{self.currency_name}=X", "1wk", "30m")
-                elif self.currency_name[:-3] != "USD" and self.time_frame == "MONTH":
-                    currency = DataFetcher(f"{self.currency_name}=X", "1mo", "1d")
+
+                if self.currency_name[:-3] == "USD" and\
+                        self.time_frame == "DAY":
+                    currency = DataFetcher(
+                        f"{self.currency_name[-3:]}=X",
+                        "1d",
+                        "5m"
+                    )
+
+                elif self.currency_name[:-3] == "USD" and\
+                        self.time_frame == "WEEK":
+                    currency = DataFetcher(
+                        f"{self.currency_name[-3:]}=X",
+                        "1wk",
+                        "30m"
+                    )
+
+                elif self.currency_name[:-3] == "USD" and\
+                        self.time_frame == "MONTH":
+                    currency = DataFetcher(
+                        f"{self.currency_name[-3:]}=X",
+                        "1mo",
+                        "1d"
+                    )
+
+                elif self.currency_name[:-3] != "USD" and\
+                        self.time_frame == "DAY":
+                    currency = DataFetcher(
+                        f"{self.currency_name}=X",
+                        "1d",
+                        "5m"
+                    )
+
+                elif self.currency_name[:-3] != "USD" and\
+                        self.time_frame == "WEEK":
+                    currency = DataFetcher(
+                        f"{self.currency_name}=X",
+                        "1wk",
+                        "30m"
+                    )
+
+                elif self.currency_name[:-3] != "USD" and\
+                        self.time_frame == "MONTH":
+                    currency = DataFetcher(
+                        f"{self.currency_name}=X",
+                        "1mo",
+                        "1d"
+                    )
+
                 else:
-                    currency = DataFetcher(f"{self.currency_name}=X", "1d", "5m")
+                    currency = DataFetcher(
+                        f"{self.currency_name}=X",
+                        "1d",
+                        "5m"
+                    )
+
             else:
                 currency = DataFetcher("EURUSD=X", "1d", "5m")
 
@@ -60,7 +101,7 @@ class LiveConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_currency_obj(self, user):
         # Gets the last user choice for live currency
-        return UserSettings.objects.filter(user=user)[UserSettings.objects.count() - 1]
+        return UserSettings.objects.filter(user=user).last()
 
     async def get_currency_id(self, currency_obj):
         # Gets the id of the currency

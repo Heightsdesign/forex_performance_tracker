@@ -21,7 +21,6 @@ from live import views as live_views
 from trades import views as trades_views
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', live_views.homepage, name='homepage'),
@@ -36,4 +35,3 @@ if settings.DEBUG:
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
-

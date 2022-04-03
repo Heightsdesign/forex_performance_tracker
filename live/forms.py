@@ -11,12 +11,12 @@ class CurrencyForm(forms.Form):
         label="currency_pair",
         max_length=6,
         required=True,
-        widget=forms.Select(choices=get_choices(CurrencyPair))
+        widget=forms.Select(choices=get_choices(CurrencyPair)),
     )
 
     time_frame = forms.CharField(
         label="time_frame",
         max_length=6,
         required=True,
-        widget=forms.Select(choices=time_frames)
+        widget=forms.Select(choices=time_frames),
     )

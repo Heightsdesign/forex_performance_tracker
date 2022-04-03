@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('trades', '0001_initial'),
+        ("trades", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trade',
-            name='diff',
+            model_name="trade",
+            name="diff",
             field=models.DecimalField(decimal_places=5, max_digits=8),
         ),
         migrations.AlterField(
-            model_name='trade',
-            name='entry_point',
+            model_name="trade",
+            name="entry_point",
             field=models.DecimalField(decimal_places=5, max_digits=8),
         ),
         migrations.AlterField(
-            model_name='trade',
-            name='exit_point',
+            model_name="trade",
+            name="exit_point",
             field=models.DecimalField(decimal_places=5, max_digits=8),
         ),
     ]

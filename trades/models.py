@@ -25,30 +25,12 @@ class Trade(models.Model):
 
     position = models.CharField(max_length=4, blank=True)
 
-    entry_point = models.DecimalField(
-        max_digits=8,
-        decimal_places=5
-    )
+    entry_point = models.DecimalField(max_digits=8, decimal_places=5)
 
-    exit_point = models.DecimalField(
-        max_digits=8,
-        decimal_places=5
-    )
+    exit_point = models.DecimalField(max_digits=8, decimal_places=5)
 
-    diff = models.DecimalField(
-        max_digits=8,
-        decimal_places=5
-    )
+    diff = models.DecimalField(max_digits=8, decimal_places=5)
 
-    profit = models.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
+    profit = models.DecimalField(max_digits=10, decimal_places=2)
 
     datetime = models.DateTimeField(auto_now=True)
-
-
-
-
-
-

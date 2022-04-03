@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 import json
@@ -21,32 +20,38 @@ def user_page(request, user_id):
     positions = ["BUY", "SELL"]
     user_strategy = Strategy.objects.filter(user=user).last()
 
-    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-    today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+    today_min = datetime.datetime.combine(
+        datetime.date.today(),
+        datetime.time.min
+    )
+    today_max = datetime.datetime.combine(
+        datetime.date.today(),
+        datetime.time.max
+    )
 
     if user_strategy is not None:
         user_strategy = user_strategy.content
 
     try:
-        today_trades = Trade.objects.filter(user=user, datetime__range=(today_min, today_max))
+        today_trades = Trade.objects.filter(
+            user=user, datetime__range=(today_min, today_max)
+        )
+
     except Trade.DoesNotExist:
         today_trades = None
 
     for trade in all_trades:
         total_trades += trade.profit
 
-    if request.method == "POST" and 'stratButton' in request.POST:
+    if request.method == "POST" and "stratButton" in request.POST:
         strategy_form = StrategyForm(request.POST)
         form = TradeForm()
         if strategy_form.is_valid():
             content = strategy_form.cleaned_data.get("content")
 
-            Strategy.objects.create(
-                user=user,
-                content=content
-            )
+            Strategy.objects.create(user=user, content=content)
 
-    if request.method == "POST" and 'tradeButton' in request.POST:
+    if request.method == "POST" and "tradeButton" in request.POST:
         form = TradeForm(request.POST)
         strategy_form = StrategyForm()
         if form.is_valid():
@@ -81,10 +86,10 @@ def user_page(request, user_id):
         "positions": positions,
         "volumes": volumes,
         "today_trades": today_trades,
-        "user_strategy": user_strategy
+        "user_strategy": user_strategy,
     }
 
-    return render(request, 'users/user_page.html', context)
+    return render(request, "users/user_page.html", context)
 
 
 def sign_up(request):
@@ -117,13 +122,10 @@ def sign_up(request):
 
                 message = f"{username} HAS BEEN SUCCESSFULLY REGISTERED !"
                 success = True
-                context = {
-                    "message": message,
-                    "success": success
-                }
+                context = {"message": message, "success": success}
 
             else:
-                message = f"{username} SORRY, THIS ACCOUNT IS ALREADY REGISTERED !"
+                message = f"{username} : ACCOUNT IS ALREADY REGISTERED !"
                 context = {"message": message}
 
             return render(request, "users/thank_you.html", context)
@@ -135,7 +137,7 @@ def sign_up(request):
         "form": form,
     }
 
-    return render(request, 'users/sign_up_page.html', context)
+    return render(request, "users/sign_up_page.html", context)
 
 
 def login(request):
@@ -172,7 +174,7 @@ def login(request):
 
     context = {"form": form}
 
-    return render(request, 'users/login_page.html', context)
+    return render(request, "users/login_page.html", context)
 
 
 def logout_view(request):
@@ -185,4 +187,4 @@ def logout_view(request):
 def performance(request, user_id):
 
     user = User.objects.get(pk=user_id)
-    return render(request, 'trades/performance.html')
+    return render(request, "trades/performance.html")

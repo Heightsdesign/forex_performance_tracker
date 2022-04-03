@@ -10,7 +10,6 @@ Get data from yfinance example:
 
 
 class DataFetcher:
-
     def __init__(self, pair, period, interval):
         self.pair = pair
         self.period = period
@@ -20,8 +19,7 @@ class DataFetcher:
     def get_historical_data(self):
 
         self.historical_data = self.pairTicker.history(
-            period=self.period,
-            interval=self.interval
+            period=self.period, interval=self.interval
         )
 
         return self.historical_data
@@ -32,10 +30,10 @@ class DataFetcher:
 
         points = []
 
-        data = data.reset_index().rename(columns={'Datetime': 'Date'})
-        tick_open = data['Open'].tolist()
-        tick_close = data['Close'].tolist()
-        tick_dates = data['Date'].tolist()
+        data = data.reset_index().rename(columns={"Datetime": "Date"})
+        tick_open = data["Open"].tolist()
+        tick_close = data["Close"].tolist()
+        tick_dates = data["Date"].tolist()
         pydates = []
 
         for to in tick_open:
@@ -60,7 +58,7 @@ class DataFetcher:
 
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        price = yf.Ticker(self.pair).info['regularMarketPrice']
+        price = yf.Ticker(self.pair).info["regularMarketPrice"]
 
         real_time_data[date_time] = round(price, 5)
 

@@ -15,8 +15,7 @@ Id: 12
 """
 
 
-class SeleniumUser():
-
+class SeleniumUser:
     def __init__(self, id, email, username, password):
         self.id = id
         self.email = email
@@ -25,7 +24,6 @@ class SeleniumUser():
 
 
 class SeleniumTestCase(TestCase):
-
     def setUp(self):
 
         self.user = SeleniumUser(
@@ -43,20 +41,33 @@ class SeleniumTestCase(TestCase):
 
         # Sets the driver
         # For production environment
-        # self.browser = webdriver.Firefox(executable_path='/usr/local/bin/geckodriver', options=self.options)
+        # self.browser = webdriver.Firefox(
+        #     executable_path='/usr/local/bin/geckodriver',
+        #     options=self.options
+        # )
 
         # For local environment
-        self.browser = webdriver.Firefox(executable_path='D:\webdrivers\geckodriver.exe', options=self.options)
+        self.browser = webdriver.Firefox(
+            executable_path="D:\webdrivers\geckodriver.exe",
+            options=self.options
+        )
         self.browser.maximize_window()
 
     def test_selenium_logic(self):
 
         # Browses to the connexion page local environment
-        self.browser.get('http://127.0.0.1:8000/users/login/')
+        self.browser.get("http://127.0.0.1:8000/users/login/")
 
         # Fetches the email and password inputs
-        email_input = self.browser.find_element(by=By.ID, value='email_input_log')
-        password_input = self.browser.find_element(by=By.ID, value='password_input_log')
+        email_input = self.browser.find_element(
+            by=By.ID,
+            value="email_input_log"
+        )
+
+        password_input = self.browser.find_element(
+            by=By.ID,
+            value="password_input_log"
+        )
 
         # Inserts the email and password inputs
         email_input.send_keys(self.user.email)
@@ -64,7 +75,7 @@ class SeleniumTestCase(TestCase):
         password_input.send_keys(self.user.password + Keys.RETURN)
         time.sleep(2)
         # Verifies if Pur Beurre is in the title of the page
-        assert 'Quren' in self.browser.title
+        assert "Quren" in self.browser.title
         time.sleep(2)
         assert self.user.username in self.browser.page_source
 
@@ -74,17 +85,26 @@ class SeleniumTestCase(TestCase):
         # browser.get('http://159.65.51.134:80/users/{}/')
 
         # For local environment
-        self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+        self.browser.get(
+            "http://127.0.0.1:8000/users/{}/".format(self.user.id)
+        )
         time.sleep(2)
 
         """Tests user strategy change"""
 
-        strategy_input = self.browser.find_element(by=By.ID, value='content')
+        strategy_input = self.browser.find_element(by=By.ID, value="content")
         strategy_input.send_keys("Test Strategy")
-        change_strat_button = self.browser.find_element(by=By.ID, value='stratButton')
+
+        change_strat_button = self.browser.find_element(
+            by=By.ID,
+            value="stratButton"
+        )
+
         change_strat_button.click()
         time.sleep(2)
-        self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+        self.browser.get(
+            "http://127.0.0.1:8000/users/{}/".format(self.user.id)
+        )
         time.sleep(2)
         assert "Test Strategy" in self.browser.page_source
 
@@ -106,34 +126,44 @@ class SeleniumTestCase(TestCase):
         time.sleep(1)
 
         # Adds the trade, clicks the button
-        add_trade_button = self.browser.find_element(by=By.ID, value="submitButton")
+        add_trade_button = self.browser.find_element(
+            by=By.ID,
+            value="submitButton"
+        )
+
         time.sleep(1)
         add_trade_button.click()
         time.sleep(1)
 
-        self.browser.get('http://127.0.0.1:8000/users/{}/'.format(self.user.id))
+        self.browser.get(
+            "http://127.0.0.1:8000/users/{}/".format(self.user.id)
+        )
 
-        # Checks if the trade was added checks by looking for its entry point value
+        # Checks if the trade was added by looking for its entry point value
         assert "1.35100" in self.browser.page_source
         time.sleep(5)
-        self.browser.get('http://127.0.0.1:8000/live/')
+        self.browser.get("http://127.0.0.1:8000/live/")
         time.sleep(10)
 
         # dropdowns = self.browser.find_element(
-        # by=By.XPATH, value="//div[@class='ui dropdown selection']//i[@class='dropdown icon']"
+        # by=By.XPATH,
+        # value="//div[@class='ui dropdown selection']//i[@class='dropdown icon']"
         # )
         # dropdowns.click()
         # time.sleep(2)
         # select = Select(dropdowns)
         # select.select_by_index(2)
 
-        change_button = self.browser.find_element(by=By.ID, value="submitButton")
+        change_button = self.browser.find_element(
+            by=By.ID,
+            value="submitButton"
+        )
+
         time.sleep(1)
         change_button.click()
         time.sleep(1)
-        self.browser.get('http://127.0.0.1:8000/live/')
+        self.browser.get("http://127.0.0.1:8000/live/")
         time.sleep(10)
         assert "EURUSD" in self.browser.page_source
         time.sleep(2)
         self.browser.quit()
-

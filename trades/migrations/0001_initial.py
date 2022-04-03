@@ -9,29 +9,59 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CurrencyPair',
+            name="CurrencyPair",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=6)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=6)),
             ],
         ),
         migrations.CreateModel(
-            name='Trade',
+            name="Trade",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('position', models.CharField(blank=True, max_length=4)),
-                ('entry_point', models.DecimalField(decimal_places=5, max_digits=5)),
-                ('exit_point', models.DecimalField(decimal_places=5, max_digits=5)),
-                ('diff', models.DecimalField(decimal_places=5, max_digits=5)),
-                ('profit', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('datetime', models.DateTimeField(auto_now=True)),
-                ('currency_pair', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='trades.currencypair')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user', to='users.user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("position", models.CharField(blank=True, max_length=4)),
+                ("entry_point", models.DecimalField(decimal_places=5, max_digits=5)),
+                ("exit_point", models.DecimalField(decimal_places=5, max_digits=5)),
+                ("diff", models.DecimalField(decimal_places=5, max_digits=5)),
+                ("profit", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("datetime", models.DateTimeField(auto_now=True)),
+                (
+                    "currency_pair",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="trades.currencypair",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="user",
+                        to="users.user",
+                    ),
+                ),
             ],
         ),
     ]

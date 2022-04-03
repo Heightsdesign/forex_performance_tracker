@@ -7,13 +7,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('trades', '0002_alter_trade_diff_alter_trade_entry_point_and_more'),
+        ("trades", "0002_alter_trade_diff_alter_trade_entry_point_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trade',
-            name='currency_pair',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='trades.currencypair'),
+            model_name="trade",
+            name="currency_pair",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="trades.currencypair",
+            ),
         ),
     ]

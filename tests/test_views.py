@@ -11,7 +11,6 @@ from live.views import homepage, index
 
 
 class UserPageTestCase(TestCase):
-
     def setUp(self):
 
         # Sets the request factory
@@ -31,9 +30,7 @@ class UserPageTestCase(TestCase):
             capital=10000.00,
         )
 
-        self.currency_pair = CurrencyPair.objects.create(
-            name="EURUSD"
-        )
+        self.currency_pair = CurrencyPair.objects.create(name="EURUSD")
 
     def test_user_page_returns_200(self):
 
@@ -51,17 +48,15 @@ class UserPageTestCase(TestCase):
         intial_trades_count = Trade.objects.all().count()
 
         mock_post_data = {
-            'tradeButton': 'tradeButton',
-            'currency_pair': 'EURUSD',
-            'entry_point': '1.12100',
-            'exit_point': '1.12200',
-            'position': 'BUY',
-            'profit': 100.00
+            "tradeButton": "tradeButton",
+            "currency_pair": "EURUSD",
+            "entry_point": "1.12100",
+            "exit_point": "1.12200",
+            "position": "BUY",
+            "profit": 100.00,
         }
 
-        response = self.client.post(
-            f"/users/{user_id}/", data=mock_post_data
-        )
+        response = self.client.post(f"/users/{user_id}/", data=mock_post_data)
         final_trades_count = Trade.objects.all().count()
 
         self.assertEqual(response.status_code, 200)
@@ -72,13 +67,11 @@ class UserPageTestCase(TestCase):
         user_id = self.user.id
         initial_strategy_count = Strategy.objects.all().count()
         mock_post_data = {
-            'stratButton': 'stratButton',
-            'content': 'Test content',
+            "stratButton": "stratButton",
+            "content": "Test content",
         }
 
-        response = self.client.post(
-            f"/users/{user_id}/", data=mock_post_data
-        )
+        response = self.client.post(f"/users/{user_id}/", data=mock_post_data)
         final_strategy_count = Strategy.objects.all().count()
 
         self.assertEqual(response.status_code, 200)
@@ -86,7 +79,6 @@ class UserPageTestCase(TestCase):
 
 
 class SignUpPageTestCase(TestCase):
-
     def setUp(self):
 
         # Sets the request factory
@@ -94,9 +86,7 @@ class SignUpPageTestCase(TestCase):
 
     def test_sign_up_page_returns_200(self):
 
-        self.request = self.factory.get(
-            "/users/sign_up"
-        )
+        self.request = self.factory.get("/users/sign_up")
 
         response = sign_up(self.request)
         self.assertEqual(response.status_code, 200)
@@ -116,7 +106,7 @@ class SignUpPageTestCase(TestCase):
                 "email": "test2@gmail.com",
                 "username": "test2",
                 "password": "pass123",
-                "capital": 10000.00
+                "capital": 10000.00,
             },
         )
 
@@ -134,7 +124,6 @@ class SignUpPageTestCase(TestCase):
 
 
 class LogInPageTestCase(TestCase):
-
     def setUp(self):
 
         # Sets the request factory
@@ -172,7 +161,6 @@ class LogInPageTestCase(TestCase):
 
         self.assertEqual(self.response.status_code, 200)
 
-
     def test_login_unsuccessful(self):
 
         self.request = self.factory.post(
@@ -181,7 +169,11 @@ class LogInPageTestCase(TestCase):
         )
 
         self.response = login(self.request)
-        self.assertContains(self.response, "WRONG EMAIL OR PASSWORD", html=True)
+        self.assertContains(
+            self.response,
+            "WRONG EMAIL OR PASSWORD",
+            html=True
+        )
 
     def test_thank_you_returns_200(self):
 
@@ -195,7 +187,6 @@ class LogInPageTestCase(TestCase):
 
 
 class PerformancePageTestCase(TestCase):
-
     def setUp(self):
         # Sets the request factory
         self.factory = RequestFactory()
@@ -219,14 +210,16 @@ class PerformancePageTestCase(TestCase):
         user_id = self.user.id
 
         # Gets the response from client
-        response = self.client.get(reverse("users:performance", args=(user_id,)))
+        response = self.client.get(reverse(
+            "users:performance",
+            args=(user_id,)
+        ))
 
         # Checking if status code is equal to 200
         self.assertEqual(response.status_code, 200)
 
 
 class InfoViewsTestCase(TestCase):
-
     def setUp(self):
 
         # Sets the request factory
@@ -234,23 +227,18 @@ class InfoViewsTestCase(TestCase):
 
     def test_about_us_page_returns_200(self):
 
-        self.request = self.factory.get(
-            "/info/about_us"
-        )
+        self.request = self.factory.get("/info/about_us")
         response = about_us(self.request)
         self.assertEqual(response.status_code, 200)
 
     def test_legal_page_returns_200(self):
 
-        self.request = self.factory.get(
-            "/info/legal"
-        )
+        self.request = self.factory.get("/info/legal")
         response = legal(self.request)
         self.assertEqual(response.status_code, 200)
 
 
 class LiveViewsTestCase(TestCase):
-
     def setUp(self):
 
         # Sets the request factory
@@ -270,42 +258,30 @@ class LiveViewsTestCase(TestCase):
             capital=10000.00,
         )
 
-        self.pair_eurusd = CurrencyPair.objects.create(
-            name="EURUSD"
-        )
+        self.pair_eurusd = CurrencyPair.objects.create(name="EURUSD")
 
-        self.pair_usdjpy = CurrencyPair.objects.create(
-            name="USDJPY"
-        )
+        self.pair_usdjpy = CurrencyPair.objects.create(name="USDJPY")
 
     def test_homepage_returns_200(self):
 
-        self.request = self.factory.get(
-            "/"
-        )
+        self.request = self.factory.get("/")
         response = homepage(self.request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_returns_200(self):
 
-        self.request = self.factory.get(
-            "/live/"
-        )
+        self.request = self.factory.get("/live/")
         self.request.user = self.user
         response = index(self.request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_returns_200_with_settings(self):
 
-        self.request = self.factory.get(
-            "/live/"
-        )
+        self.request = self.factory.get("/live/")
         self.request.user = self.user
 
         self.user_settings = UserSettings.objects.create(
-            user=self.user,
-            currency_graph=self.pair_eurusd,
-            time_frame="DAY"
+            user=self.user, currency_graph=self.pair_eurusd, time_frame="DAY"
         )
 
         response = index(self.request)
@@ -315,12 +291,10 @@ class LiveViewsTestCase(TestCase):
 
         initial_settings_count = UserSettings.objects.all().count()
         mock_post_data = {
-            'currency_pair': 'EURUSD',
-            'time_frame': 'DAY',
+            "currency_pair": "EURUSD",
+            "time_frame": "DAY",
         }
-        self.request = self.factory.post(
-            "/live/", data=mock_post_data
-        )
+        self.request = self.factory.post("/live/", data=mock_post_data)
         self.request.user = self.user
 
         response = index(self.request)
@@ -333,12 +307,10 @@ class LiveViewsTestCase(TestCase):
 
         initial_settings_count = UserSettings.objects.all().count()
         mock_post_data = {
-            'currency_pair': 'USDJPY',
-            'time_frame': 'WEEK',
+            "currency_pair": "USDJPY",
+            "time_frame": "WEEK",
         }
-        self.request = self.factory.post(
-            "/live/", data=mock_post_data
-        )
+        self.request = self.factory.post("/live/", data=mock_post_data)
         self.request.user = self.user
 
         response = index(self.request)
@@ -346,6 +318,3 @@ class LiveViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(final_settings_count, initial_settings_count + 1)
-
-
-

@@ -1,6 +1,5 @@
 from django.utils import timezone
 import datetime
-from users.models import User
 from .models import Trade, CurrencyPair
 
 
@@ -45,12 +44,10 @@ def get_daily_trades(user):
             if trade not in used_trades:
                 used_trades.append(trade)
                 daily_profit += trade.profit
-                # print(f"date : {trade.datetime} / profit : {trade.profit}")
 
-        # daily_performance = {day_index: float(percentage_calculator(capital, daily_profit))}
-        # daily_performances.append(daily_performance)
-
-        daily_performances[day_index] = float(percentage_calculator(capital, daily_profit))
+        daily_performances[day_index] = float(
+            percentage_calculator(capital, daily_profit)
+        )
 
     return daily_performances
 
@@ -69,12 +66,8 @@ def get_volumes(user):
         )
 
         number_trades = len(data)
-        volumes[currency.name] = float(percentage_calculator(total_trades, number_trades))
+        volumes[currency.name] = float(
+            percentage_calculator(total_trades, number_trades)
+        )
 
     return volumes
-
-
-
-
-
-

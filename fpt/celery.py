@@ -9,7 +9,7 @@ app.config_from_object('django.conf:settings')
 
 app.conf.beat_schedule = {
 
-    'get_rtdata_5s':{
+    'get_rtdata_5s': {
         'task': 'live.tasks.get_rtdata',
         'schedule': 5.0
     }

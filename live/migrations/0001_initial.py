@@ -10,18 +10,40 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('trades', '0003_alter_trade_currency_pair'),
+        ("trades", "0003_alter_trade_currency_pair"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UserSettings',
+            name="UserSettings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.IntegerField(blank=True, null=True)),
-                ('currency_graph', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='trades.currencypair')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("status", models.IntegerField(blank=True, null=True)),
+                (
+                    "currency_graph",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="trades.currencypair",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

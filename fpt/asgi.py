@@ -16,7 +16,6 @@ from live.routing import ws_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fpt.settings')
 django.setup()
-# application = get_asgi_application()
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
@@ -24,6 +23,3 @@ application = ProtocolTypeRouter({
             URLRouter(ws_urlpatterns)
         )
     })
-
-
-

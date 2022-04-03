@@ -4,12 +4,11 @@ from .forms import CurrencyForm
 from .models import UserSettings
 from .constants import time_frames
 from trades.models import CurrencyPair
-from users.models import User
 import json
 
 
 def homepage(request):
-    return render(request, 'live/homepage.html')
+    return render(request, "live/homepage.html")
 
 
 def index(request):
@@ -61,18 +60,15 @@ def index(request):
             )
             time_frame = form.cleaned_data.get("time_frame")
             UserSettings.objects.create(
-                user=user,
-                currency_graph=currency_pair,
-                time_frame=time_frame
+                user=user, currency_graph=currency_pair, time_frame=time_frame
             )
 
     context = {
         "actualData": actualData,
         "all_currency_pairs": all_currency_pairs,
-        "form":form,
-        "currency_choice":currency_choice,
-        "time_frames":time_frames
+        "form": form,
+        "currency_choice": currency_choice,
+        "time_frames": time_frames,
     }
 
-    return render(request, 'live/live_charts.html', context)
-
+    return render(request, "live/live_charts.html", context)
