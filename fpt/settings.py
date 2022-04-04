@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-g6@&e1u&xzm(q(4x88%_@02bri#1s)%ygphfe=2lz=&^y*67p(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','desolate-woodland-69091.herokuapp.com',]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'fpt',
         'USER': 'postgres',
         'PASSWORD': 'Eug&nia06240',
-        'HOST': 'localhost',
+        'HOST': '',
         'PORT': '5432',
     }
 }
@@ -155,13 +155,12 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
         'CONFIG': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
+            'NAME': 'fpt',
             'USER': 'postgres',
             'PASSWORD': 'Eug&nia06240',
-            'HOST': 'localhost',
+            'HOST': '',
             'PORT': '5432',
         },
     },
 }
 
-django_heroku.settings(locals())
