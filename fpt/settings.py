@@ -160,7 +160,7 @@ CHANNEL_LAYERS = {
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'Eug&nia06240',
-            'HOST': '127.0.0.1',
+            'HOST': '127.0.0.1,0.0.0.0,desolate-woodland-69091.herokuapp.com',
             'PORT': '5432',
         },
     },
