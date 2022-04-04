@@ -1,1 +1,1 @@
-web: uvicorn fpt.asgi:application --port 8080 --bind 127.0.0.1
+web: gunicorn fpt.asgi:application -w 4 -k uvicorn.workers.UvicornWorker
