@@ -1,6 +1,5 @@
 from users.forms import get_choices
 from django import forms
-from django.forms.widgets import TextInput
 from trades.models import CurrencyPair
 from .constants import time_frames
 
