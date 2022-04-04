@@ -1,1 +1,1 @@
-web: gunicorn fpt.asgi:application -w 4 -k uvicorn.workers.UvicornWorker
+web: daphne -p 8080 fpt.asgi:application
