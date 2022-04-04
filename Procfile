@@ -1,1 +1,1 @@
-web: daphne -p 8080 fpt.asgi:application
+worker: daphne -p 8080 fpt.asgi:application
