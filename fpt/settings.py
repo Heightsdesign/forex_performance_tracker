@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+# import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-g6@&e1u&xzm(q(4x88%_@02bri#1s)%ygphfe=2lz=&^y*67p(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -79,9 +80,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fpt.wsgi.application'
-ASGI_APPLICATION = 'fpt.asgi.application'
+# ASGI_APPLICATION = 'fpt.asgi.application'
 
-CELERY_BROKER_URL = 'amqp://localhost'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -97,19 +98,7 @@ DATABASES = {
     }
 }
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
-        'CONFIG': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'Eug&nia06240',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        },
-    },
-}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -157,3 +146,18 @@ AUTHENTICATION_BACKENDS = (
     )
 
 AUTH_USER_MODEL = 'users.User'
+
+ASGI_APPLICATION = 'fpt.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
+        'CONFIG': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'Eug&nia06240',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        },
+    },
+}
