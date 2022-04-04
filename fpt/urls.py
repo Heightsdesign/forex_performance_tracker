@@ -18,7 +18,7 @@ from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls import include
 from live import views as live_views
-from trades import views as trades_views
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -27,7 +27,7 @@ urlpatterns = [
     re_path(r'^live/', include(('live.urls', 'live'), namespace='live')),
     re_path(r'^info/', include(('info.urls', 'info'), namespace='info')),
     re_path(r'^users/', include(('users.urls', 'users'), namespace='users')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
 
 if settings.DEBUG:
