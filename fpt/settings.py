@@ -32,10 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
-    'live.apps.LiveConfig',
-    'trades.apps.TradesConfig',
-    'info.apps.InfoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +42,11 @@ INSTALLED_APPS = [
     'channels',
     'channels_postgres',
     'django_nose',
+    'users.apps.UsersConfig',
+    'live.apps.LiveConfig',
+    'trades.apps.TradesConfig',
+    'info.apps.InfoConfig',
+    'tests',
 ]
 
 MIDDLEWARE = [

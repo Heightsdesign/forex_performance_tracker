@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from django.conf import settings
+"""from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fpt.settings')
 
@@ -14,4 +14,4 @@ app.conf.beat_schedule = {
         'schedule': 5.0
     }
 }
-app.autodiscover_tasks(settings.INSTALLED_APPS)
+app.autodiscover_tasks(settings.INSTALLED_APPS)"""
