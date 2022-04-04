@@ -18,7 +18,7 @@ def get_choices(db_obj):
 
 class TradeForm(forms.Form):
 
-    if get_choices(CurrencyPair):
+    if len(CurrencyPair.objects.all()) > 0:
         currency_pair = forms.CharField(
             label="currency_pair",
             max_length=6,
