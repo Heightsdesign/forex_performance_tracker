@@ -18,37 +18,12 @@ def get_choices(db_obj):
 
 class TradeForm(forms.Form):
 
-    if len(CurrencyPair.objects.all()) > 0:
-        currency_pair = forms.CharField(
-            label="currency_pair",
-            max_length=6,
-            required=True,
-            widget=forms.Select(choices=get_choices(CurrencyPair)),
-        )
-
-    else:
-        currencies = [
-            'EURUSD',
-            'GBPUSD',
-            'AUDUSD',
-            'NZDUSD',
-            'USDJPY',
-            'USDCAD',
-            'USDCHF',
-            'USDRUB',
-            'EURCHF',
-            'EURGBP'
-        ]
-
-        for currency in currencies:
-            CurrencyPair.objects.create(name=currency)
-
-        currency_pair = forms.CharField(
-            label="currency_pair",
-            max_length=6,
-            required=True,
-            widget=forms.Select(choices=get_choices(CurrencyPair)),
-        )
+    currency_pair = forms.CharField(
+        label="currency_pair",
+        max_length=6,
+        required=True,
+        widget=forms.Select(choices=get_choices(CurrencyPair)),
+    )
 
     position = forms.CharField(
         label="currency_pair",
