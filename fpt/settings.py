@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g6@&e1u&xzm(q(4x88%_@02bri#1s)%ygphfe=2lz=&^y*67p('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '139.59.175.180']
 
 # Application definition
 
@@ -85,8 +83,8 @@ ASGI_APPLICATION = 'fpt.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
+# local settings
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fpt',
@@ -95,12 +93,18 @@ DATABASES = {
         'HOST': '',
         'PORT': '5432',
     }
+}"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fpt',
+        'USER': 'plher',
+        'PASSWORD': 'Eug&nia06240',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'] = dj_database_url.config('postgres://...', conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
