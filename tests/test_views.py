@@ -1,13 +1,18 @@
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from unittest import mock
 from users.models import User, Strategy
 from trades.models import Trade, CurrencyPair
 from live.models import UserSettings
-from users.views import user_page, sign_up, login, logout_view
+from users.views import sign_up, logout_view
+from users.views import login as login_view
 from info.views import about_us, legal
 from live.views import homepage, index
+from django.contrib.auth import login
 
-# Create your tests here.
+# Create your tests here
 
 
 class UserPageTestCase(TestCase):
@@ -146,7 +151,7 @@ class LogInPageTestCase(TestCase):
     def test_login_page_returns_200(self):
 
         self.request = self.factory.get("/users/login/")
-        response = login(self.request)
+        response = login_view(self.request)
         self.assertEqual(response.status_code, 200)
 
     def test_login_successful(self):
@@ -156,7 +161,7 @@ class LogInPageTestCase(TestCase):
             {"email": self.user.email, "password": self.user.password},
         )
 
-        self.response = login(self.request)
+        self.response = login_view(self.request)
         self.assertTrue(self.user.is_authenticated)
 
         self.assertEqual(self.response.status_code, 200)
@@ -168,7 +173,7 @@ class LogInPageTestCase(TestCase):
             {"email": "wrong@mail", "password": "wrong123"},
         )
 
-        self.response = login(self.request)
+        self.response = login_view(self.request)
         self.assertContains(
             self.response,
             "WRONG EMAIL OR PASSWORD",
@@ -182,7 +187,7 @@ class LogInPageTestCase(TestCase):
             {"email": self.user.email, "password": self.user.password},
         )
         request = self.factory.get("/users/thank_you.html")
-        response = login(request)
+        response = login_view(request)
         self.assertEqual(response.status_code, 200)
 
 
@@ -308,7 +313,7 @@ class LiveViewsTestCase(TestCase):
         initial_settings_count = UserSettings.objects.all().count()
         mock_post_data = {
             "currency_pair": "USDJPY",
-            "time_frame": "WEEK",
+            "time_frame": "MONTH",
         }
         self.request = self.factory.post("/live/", data=mock_post_data)
         self.request.user = self.user

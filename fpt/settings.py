@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g6@&e1u&xzm(q(4x88%_@02bri#1s)%ygphfe=2lz=&^y*67p('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '139.59.175.180']
+ALLOWED_HOSTS = ['localhost', '139.59.175.180', '127.0.0.1']
 
 # Application definition
 
@@ -83,8 +83,9 @@ ASGI_APPLICATION = 'fpt.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
 # local settings
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fpt',
@@ -93,9 +94,10 @@ ASGI_APPLICATION = 'fpt.routing.application'
         'HOST': '',
         'PORT': '5432',
     }
-}"""
+}
 
-DATABASES = {
+# Production server settings
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fpt',
@@ -104,7 +106,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     }
-}
+}"""
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -154,6 +156,7 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'users.User'
 
+# Local server settings
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
@@ -168,3 +171,17 @@ CHANNEL_LAYERS = {
     },
 }
 
+# Production server settings
+"""CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
+        'CONFIG': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'fpt',
+            'USER': 'plher',
+            'PASSWORD': 'Font&ne30420',
+            'HOST': 'localhost',
+            'PORT': '',
+        },
+    },
+}"""

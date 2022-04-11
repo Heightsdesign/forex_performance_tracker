@@ -1,12 +1,12 @@
 from django.test import TestCase
-from channels.routing import ProtocolTypeRouter, URLRouter
-from django.urls import re_path, path
 import pytest
 from channels.testing import WebsocketCommunicator
 
 from trades.calculator import percentage_calculator
 from live import api
 from live.consumers import LiveConsumer
+from trades.management.commands import dbinsert
+from trades.models import CurrencyPair
 
 
 @pytest.mark.django_db(transaction=True)
@@ -90,3 +90,14 @@ class ApiTestCase(TestCase):
 
         # Verifies function is iterable
         self.assertTrue(len(result))
+
+
+class DbInsert(TestCase):
+
+    def test_dbinsert(self):
+
+        initial_vals = len(CurrencyPair.objects.all())
+        dbinsert.Command.handle(self)
+        new_vals = len(CurrencyPair.objects.all())
+        assert(new_vals > initial_vals)
+
