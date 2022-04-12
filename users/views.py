@@ -49,58 +49,55 @@ def user_page(request, user_id):
         strategy_form = StrategyForm()
         form = TradeForm()
 
-    if str(request.user) != user.email:
-        message = "NOT AUTHORIZED"
+        if request.method == "POST" and "stratButton" in request.POST:
+            strategy_form = StrategyForm(request.POST)
+            form = TradeForm()
+            if strategy_form.is_valid():
+                content = strategy_form.cleaned_data.get("content")
+
+                Strategy.objects.create(user=user, content=content)
+
+        elif request.method == "POST" and "tradeButton" in request.POST:
+            form = TradeForm(request.POST)
+            strategy_form = StrategyForm()
+            if form.is_valid():
+                # Creates a currency pair instance
+                currency_pair = CurrencyPair.objects.get(
+                    name=form.cleaned_data.get("currency_pair"),
+                )
+                entry_point = form.cleaned_data.get("entry_point")
+                exit_point = form.cleaned_data.get("exit_point")
+                diff = entry_point - exit_point
+
+                Trade.objects.create(
+                    user=user,
+                    currency_pair=currency_pair,
+                    position=form.cleaned_data.get("position"),
+                    entry_point=entry_point,
+                    exit_point=exit_point,
+                    diff=diff,
+                    profit=form.cleaned_data.get("profit"),
+                )
+
+        context = {
+            "user": user,
+            "all_currency_pairs": all_currency_pairs,
+            "total_trades": total_trades,
+            "daily_performances": daily_performances,
+            "strategy_form": strategy_form,
+            "form": form,
+            "positions": positions,
+            "volumes": volumes,
+            "today_trades": today_trades,
+            "user_strategy": user_strategy,
+        }
+
+        return render(request, "users/user_page.html", context)
+
+    elif str(request.user) != user.email:
+        message = "NOT AUTHORIZED !"
         context = {"message": message}
         return render(request, "users/thank_you.html", context)
-
-    if request.method == "POST" and "stratButton" in request.POST:
-        strategy_form = StrategyForm(request.POST)
-        form = TradeForm()
-        if strategy_form.is_valid():
-            content = strategy_form.cleaned_data.get("content")
-
-            Strategy.objects.create(user=user, content=content)
-
-    if request.method == "POST" and "tradeButton" in request.POST:
-        form = TradeForm(request.POST)
-        strategy_form = StrategyForm()
-        if form.is_valid():
-            # Creates a currency pair instance
-            currency_pair = CurrencyPair.objects.get(
-                name=form.cleaned_data.get("currency_pair"),
-            )
-            entry_point = form.cleaned_data.get("entry_point")
-            exit_point = form.cleaned_data.get("exit_point")
-            diff = entry_point - exit_point
-
-            Trade.objects.create(
-                user=user,
-                currency_pair=currency_pair,
-                position=form.cleaned_data.get("position"),
-                entry_point=entry_point,
-                exit_point=exit_point,
-                diff=diff,
-                profit=form.cleaned_data.get("profit"),
-            )
-    """else:
-        strategy_form = StrategyForm()
-        form = TradeForm()"""
-
-    context = {
-        "user": user,
-        "all_currency_pairs": all_currency_pairs,
-        "total_trades": total_trades,
-        "daily_performances": daily_performances,
-        "strategy_form": strategy_form,
-        "form": form,
-        "positions": positions,
-        "volumes": volumes,
-        "today_trades": today_trades,
-        "user_strategy": user_strategy,
-    }
-
-    return render(request, "users/user_page.html", context)
 
 
 def sign_up(request):

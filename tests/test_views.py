@@ -1,16 +1,13 @@
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as auth_login
-from unittest import mock
 from users.models import User, Strategy
 from trades.models import Trade, CurrencyPair
 from live.models import UserSettings
-from users.views import sign_up, logout_view
+from users.views import sign_up, user_page
 from users.views import login as login_view
 from info.views import about_us, legal
 from live.views import homepage, index
-from django.contrib.auth import login
+
 
 # Create your tests here
 
@@ -42,7 +39,31 @@ class UserPageTestCase(TestCase):
         user_id = self.user.id
 
         # Gets the response from client
-        response = self.client.get(reverse("users:user_page", args=(user_id,)))
+        self.request = self.factory.get(
+            "/users/",
+        )
+        self.request.user = self.user
+        response = user_page(self.request, user_id)
+
+        # Checking if status code is equal to 200
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_page_no_auth_200(self):
+
+        user_id = self.user.id
+
+        # Gets the response from client
+        self.request = self.factory.get(
+            "/users/",
+        )
+
+        self.request.user = {
+            "email": "wrong@mail.com",
+            "username": "wrong",
+            "password": "wrongpass"
+        }
+
+        response = user_page(self.request, user_id)
 
         # Checking if status code is equal to 200
         self.assertEqual(response.status_code, 200)
@@ -61,25 +82,37 @@ class UserPageTestCase(TestCase):
             "profit": 100.00,
         }
 
-        response = self.client.post(f"/users/{user_id}/", data=mock_post_data)
+        self.request = self.factory.post(
+            "/users/",
+            data=mock_post_data
+        )
+        self.request.user = self.user
+        user_page(self.request, user_id)
+
         final_trades_count = Trade.objects.all().count()
 
-        self.assertEqual(response.status_code, 200)
+        # self.assertEqual(response.status_code, 200)
         self.assertEqual(final_trades_count, intial_trades_count + 1)
 
     def test_add_strategy_post_request(self):
 
         user_id = self.user.id
+
         initial_strategy_count = Strategy.objects.all().count()
         mock_post_data = {
             "stratButton": "stratButton",
             "content": "Test content",
         }
 
-        response = self.client.post(f"/users/{user_id}/", data=mock_post_data)
+        self.request = self.factory.post(
+            "/users/",
+            data=mock_post_data
+        )
+        self.request.user = self.user
+        user_page(self.request, user_id)
+
         final_strategy_count = Strategy.objects.all().count()
 
-        self.assertEqual(response.status_code, 200)
         self.assertEqual(final_strategy_count, initial_strategy_count + 1)
 
 
@@ -160,10 +193,10 @@ class LogInPageTestCase(TestCase):
             "/users/login/",
             {"email": self.user.email, "password": self.user.password},
         )
+        self.request.user = self.user
 
         self.response = login_view(self.request)
         self.assertTrue(self.user.is_authenticated)
-
         self.assertEqual(self.response.status_code, 200)
 
     def test_login_unsuccessful(self):
