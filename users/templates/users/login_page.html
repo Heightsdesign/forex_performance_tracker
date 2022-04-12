@@ -4,25 +4,25 @@
 <div class="bg-1">
     <div class="home-text">
         <h1 id="login-text">LOGIN</h1>
+        <div class="ui hidden divider"></div>
         <form class="mt-5" action="{% url 'users:login' %}" method="POST">
             {% csrf_token %}
-            <div class="sign-up-wrapper">
+            <div class="ui two column stackable grid">
                 <div class="row">
-                    <div class="col">
+                    <div class="column">
                         <div class="ui input" id="email_input">
                            {{ form.email }}
                         </div>
+                    </div>
+                    <div class="column">
                         <div class="ui input" id="password_input">
                            {{ form.password }}
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="ui primary button" id="submitButton" type="submit">Login</button>
-                    </div>
-                </div>
             </div>
+            <div class="ui hidden divider"></div>
+            <button class="ui primary button" id="submitButton" type="submit">Login</button>
         </form>
     </div>
 </div>

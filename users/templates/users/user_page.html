@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="ui divider"></div>
-        <div class="ui two column padded grid">
+        <div class="ui two column stackable grid">
             <div class="column">
                 <div class="ui comments">
                     <div class="comment">
@@ -37,7 +37,7 @@
                                 <div class="field">
                                     <label><h1 style="text-align:left" id="strat-text">Strategy</h1></label>
                                     <div class="ui hidden divider"></div>
-                                    <div class="user-strategy" style="text-align:left"><h3>{{ user_strategy }}</h3></div>
+                                    <div class="user-strategy" id="js-strat" style="text-align:left"><h3>{{ user_strategy }}</h3></div>
                                     <div class="ui hidden divider"></div>
                                     <textarea rows="3" id="content" name="content"></textarea>
                                 </div>
@@ -65,7 +65,7 @@
         <div class="panel">
             {% if today_trades %}
                 {% for trade in today_trades %}
-                    <div class="ui six column grid">
+                    <div class="ui six column stackable grid">
                       <div class="row">
                         <div class="column">
                           <h1>{{trade.currency_pair.name}}</h1>
@@ -100,7 +100,7 @@
             <div class="ui hidden divider"></div>
             <form class="mt-5" action="{% url 'users:user_page' user.id %}" method="POST">
                 {% csrf_token %}
-                <div class="ui six column grid" id="trade_inputs">
+                <div class="ui six column stackable grid" id="trade_inputs">
                     <div class="row">
                 <!-- Currency pair input-->
                         <div class="column">
@@ -152,7 +152,7 @@
 </div>
 <div class="container-3-4">
     <div class="section-wrapper">
-        <div class="ui two column padded grid">
+        <div class="ui two column stackable grid">
             <div class="column">
                 <div class="chartContainer" style="height:40vh; width:40vw">
                     <h1>Daily Performances</h1>

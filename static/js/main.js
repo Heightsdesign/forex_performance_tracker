@@ -1,21 +1,7 @@
 
-const navSlide = ()=>{
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('.nav-links');
-    const navLinks = document.querySelectorAll('.nav-links li');
-    // Toggle nav
-    burger.addEventListener('click', ()=>{
-        nav.classList.toggle('nav-active');
-    });
-    // Animate links
-    navLinks.forEach((link, index)=>{
-        link.style.animation = `navlinkfade 2s ease forwards ${index / 5 + 1.5}s`;
-    });
-}
-
-navSlide();
 
 var acc = document.getElementsByClassName("accordion");
+var container = document.getElementsByClassName("container-3-4");
 var i;
 
 for (i = 0; i < acc.length; i++) {
@@ -35,13 +21,15 @@ for (i = 0; i < acc.length; i++) {
 }
 
 var button = document.getElementById("submitButton");
-button.addEventListener("click", refresh);
+button.addEventListener("click", refresh_trades);
 
-function refresh() {
+function refresh_trades() {
     var choice = document.getElementById("js-choice");
     var content = choice.innerHTML;
     choice.innerHTML = content;
     console.log("Refreshed");
 }
+
+
 
 
