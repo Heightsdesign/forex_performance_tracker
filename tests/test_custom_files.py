@@ -100,4 +100,3 @@ class DbInsert(TestCase):
         dbinsert.Command.handle(self)
         new_vals = len(CurrencyPair.objects.all())
         assert(new_vals > initial_vals)
-

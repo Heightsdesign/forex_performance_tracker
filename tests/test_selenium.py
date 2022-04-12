@@ -145,15 +145,6 @@ class SeleniumTestCase(TestCase):
         self.browser.get("http://127.0.0.1:8000/live/")
         time.sleep(10)
 
-        # dropdowns = self.browser.find_element(
-        # by=By.XPATH,
-        # value="//div[@class='ui dropdown selection']//i[@class='dropdown icon']"
-        # )
-        # dropdowns.click()
-        # time.sleep(2)
-        # select = Select(dropdowns)
-        # select.select_by_index(2)
-
         change_button = self.browser.find_element(
             by=By.ID,
             value="submitButton"

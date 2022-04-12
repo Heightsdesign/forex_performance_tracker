@@ -12,36 +12,47 @@ from trades.calculator import get_daily_trades, get_volumes
 def user_page(request, user_id):
 
     user = User.objects.get(pk=user_id)
-    all_trades = Trade.objects.filter(user__first_name=user.first_name)
-    all_currency_pairs = CurrencyPair.objects.all()
-    total_trades = 0
-    daily_performances = json.dumps(get_daily_trades(user))
-    volumes = json.dumps(get_volumes(user))
-    positions = ["BUY", "SELL"]
-    user_strategy = Strategy.objects.filter(user=user).last()
 
-    today_min = datetime.datetime.combine(
-        datetime.date.today(),
-        datetime.time.min
-    )
-    today_max = datetime.datetime.combine(
-        datetime.date.today(),
-        datetime.time.max
-    )
+    if str(request.user) == user.email:
 
-    if user_strategy is not None:
-        user_strategy = user_strategy.content
+        all_trades = Trade.objects.filter(user__first_name=user.first_name)
+        all_currency_pairs = CurrencyPair.objects.all()
+        total_trades = 0
+        daily_performances = json.dumps(get_daily_trades(user))
+        volumes = json.dumps(get_volumes(user))
+        positions = ["BUY", "SELL"]
+        user_strategy = Strategy.objects.filter(user=user).last()
 
-    try:
-        today_trades = Trade.objects.filter(
-            user=user, datetime__range=(today_min, today_max)
+        today_min = datetime.datetime.combine(
+            datetime.date.today(),
+            datetime.time.min
+        )
+        today_max = datetime.datetime.combine(
+            datetime.date.today(),
+            datetime.time.max
         )
 
-    except Trade.DoesNotExist:
-        today_trades = None
+        if user_strategy is not None:
+            user_strategy = user_strategy.content
 
-    for trade in all_trades:
-        total_trades += trade.profit
+        try:
+            today_trades = Trade.objects.filter(
+                user=user, datetime__range=(today_min, today_max)
+            )
+
+        except Trade.DoesNotExist:
+            today_trades = None
+
+        for trade in all_trades:
+            total_trades += trade.profit
+
+        strategy_form = StrategyForm()
+        form = TradeForm()
+
+    if str(request.user) != user.email:
+        message = "NOT AUTHORIZED"
+        context = {"message": message}
+        return render(request, "users/thank_you.html", context)
 
     if request.method == "POST" and "stratButton" in request.POST:
         strategy_form = StrategyForm(request.POST)
@@ -72,9 +83,9 @@ def user_page(request, user_id):
                 diff=diff,
                 profit=form.cleaned_data.get("profit"),
             )
-    else:
+    """else:
         strategy_form = StrategyForm()
-        form = TradeForm()
+        form = TradeForm()"""
 
     context = {
         "user": user,
