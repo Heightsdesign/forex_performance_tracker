@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
   </head>
   <body>
+  <div class="ui center aligned center">
       <nav>
         <div class="logo">
           <a href="{% url 'homepage' %}">
@@ -50,23 +51,28 @@
           <div class="line3"></div>
         </div>-->
       </nav>
+  </div>
       {% block content %}
       {% endblock %}
-  </body>
-    <footer>
-      <div class="ui equal width grid" style="margin:auto">
-        <div class="column" style="text-align:center">
-          <a href="https://github.com/Heightsdesign/forex_performance_tracker">
-            <img src="{% static '/assets/img/github_icon.png' %}"/>
-          </a>
-        </div>
-        <div class="column" style="text-align:center">
-          <a href="{% url 'homepage' %}">
-            <img src="{% static '/assets/img/quren_icon-2.png' %}"/>
-          </a>
+          <div class="ui segment">
+            <footer>
+              <div class="ui equal width grid" style="margin:auto">
+                <div class="column" style="text-align:center">
+                  <a href="https://github.com/Heightsdesign/forex_performance_tracker">
+                    <img src="{% static '/assets/img/github_icon.png' %}"/>
+                  </a>
+                </div>
+                <div class="column" style="text-align:center">
+                  <a href="{% url 'homepage' %}">
+                    <img src="{% static '/assets/img/quren_icon-2.png' %}"/>
+                  </a>
+                </div>
+              </div>
+            </footer>
+          </div>
         </div>
       </div>
-    </footer>
+</body>
   <script src="{% static '/js/main.js' %}" defer></script>
   <script src="{% static '/js/semantic.js' %}" defer></script>
 </html>
